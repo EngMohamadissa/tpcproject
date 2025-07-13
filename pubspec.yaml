@@ -46,6 +46,7 @@ dependencies:
   bloc: ^9.0.0
   shared_preferences: ^2.5.3
   flutter_animate: ^4.5.2
+  animated_bottom_navigation_bar: ^1.4.0
 
 dev_dependencies:
   flutter_test:
