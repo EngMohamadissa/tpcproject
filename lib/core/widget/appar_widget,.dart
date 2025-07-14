@@ -19,7 +19,9 @@ class AppareWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      actions: actions,
+      actions: [
+        Icon(Icons.ad_units),
+      ],
       automaticallyImplyLeading: automaticallyImplyLeading,
       leading: leading,
       iconTheme: const IconThemeData(color: Colors.white),

@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tcp/constants/my_app_colors.dart';
-import 'package:tcp/screens/home_screen.dart';
+import 'package:tcp/feutaure/Root/presentation/view/root_view.dart';
 import 'package:tcp/screens/register_screen.dart';
 import 'package:tcp/view_models/auth_cubit/auth_cubit.dart';
 import 'package:tcp/view_models/auth_cubit/auth_state.dart';
@@ -32,24 +32,27 @@ class SignInScreen extends StatelessWidget {
         listener: (context, state) {
           if (state is LoginSucces) {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => HomePage()));
+                context,
+                MaterialPageRoute(
+                    builder: (context) => HomePageNavigationBar()));
           }
-           if(state is LoginError){
-              AwesomeDialog(
-            context: context,
-            dialogType: DialogType.error,
-            animType: AnimType.rightSlide,btnOkColor: MyAppColors.kPrimary,
-            title: 'Invalid credentials',
-            desc: state.error,
-            btnCancelOnPress: () {},
-            btnOkOnPress: () {},
+          if (state is LoginError) {
+            AwesomeDialog(
+              context: context,
+              dialogType: DialogType.error,
+              animType: AnimType.rightSlide,
+              btnOkColor: MyAppColors.kPrimary,
+              title: 'Invalid credentials',
+              desc: state.error,
+              btnCancelOnPress: () {},
+              btnOkOnPress: () {},
             ).show();
-            }
+          }
         },
         child: BlocBuilder<AuthCubit, AuthState>(
           builder: (context, state) {
             var c = context.read<AuthCubit>();
-           
+
             return Form(
               key: logInKey,
               child: SingleChildScrollView(

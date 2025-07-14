@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tcp/core/util/assetsImage.dart';
+import 'package:tcp/feutaure/Row_Material/presentation/view/raw_material_view.dart';
 import 'package:tcp/feutaure/home/presentation/view/widget/build_properties_container.dart';
 import 'package:tcp/feutaure/home/presentation/view/widget/card_row_materials.dart';
 import 'package:tcp/feutaure/home/presentation/view/widget/slider.dart';
@@ -30,7 +31,13 @@ class HomeView extends StatelessWidget {
                 children: [
                   Expanded(
                       child: BirthdayCard(
-                    tite: 'مواد مستخدمة',
+                    ontap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => RawMaterialsListPage()));
+                    },
+                    tite: 'مواد الخام',
                     iconData: Icons.check_circle,
                     listColor: [
                       Color(0xFF1976D2),

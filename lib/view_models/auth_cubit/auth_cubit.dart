@@ -20,8 +20,7 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> logIn() async {
     emit(Loading());
     try {
-      log(email.text);
-      log('2');
+      log('Attempting login with email: ${email.text}');
 
       final response = await ApiService().post(
         'login',
@@ -30,21 +29,30 @@ class AuthCubit extends Cubit<AuthState> {
           "password": password.text,
         },
       );
+
+      log('Raw response: ${response.data}');
+
+      // لا داعي لاستخدام json.decode هنا لأن ApiService قد قام بتحويلها بالفعل
       final data = response.data;
-      final pref = await SharedPreferences.getInstance();
-      await pref.setString('auth_token', data['token']);
-      log('statuscode ${response.statusCode}');
-      final decodedResponse = json.decode(response.data);
-      log('statuscode2 ${decodedResponse["status"]}');
-      if (decodedResponse["status"] == 200) {
-        log(decodedResponse.toString());
-        emit(LoginSucces());
+
+      if (data is Map &&
+          data.containsKey('token') &&
+          data.containsKey('status')) {
+        await sharedPreferences.setString('auth_token', data['token']);
+        log('Login successful, token saved');
+
+        if (response.statusCode == 200) {
+          emit(LoginSucces());
+        } else {
+          emit(LoginError(error: data['message'] ?? 'Login failed'));
+        }
       } else {
-        log('=====================00===');
-        emit(LoginError(error: "${decodedResponse["message"]}"));
+        log('Unexpected response format: $data');
+        emit(LoginError(error: 'Unexpected response format'));
       }
     } catch (e) {
-      log("===============${e.toString()}");
+      log("Login error: ${e.toString()}");
+      emit(LoginError(error: 'An error occurred during login'));
     }
   }
 

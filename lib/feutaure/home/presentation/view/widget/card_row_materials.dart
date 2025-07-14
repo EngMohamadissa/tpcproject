@@ -7,16 +7,18 @@ class BirthdayCard extends StatelessWidget {
       {super.key,
       required this.tite,
       required this.iconData,
-      required this.listColor});
+      required this.listColor,
+      this.ontap});
   final String tite;
   final IconData iconData;
   final List<Color> listColor;
+
+  final void Function()? ontap;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        log('asasasaas');
-      },
+      onTap: ontap,
       child: ClipPath(
         clipper: BirthDayCardClipper(),
         child: Container(
