@@ -48,14 +48,6 @@ class ApiService {
     }
   }
 
-  Future<Response> post(String path, dynamic data) async {
-    try {
-      return await _dio.post(path, data: data);
-    } on DioException catch (e) {
-      throw ErrorHandler.handleDioError(e);
-    }
-  }
-
   Future<Response> get(
     String path, {
     dynamic data,
@@ -66,7 +58,15 @@ class ApiService {
         path,
         data: data,
         queryParameters: queryParameters,
-      ); // <--- استخدم المعامل data هنا
+      );
+    } on DioException catch (e) {
+      throw ErrorHandler.handleDioError(e);
+    }
+  }
+
+  Future<Response> post(String path, dynamic data) async {
+    try {
+      return await _dio.post(path, data: data);
     } on DioException catch (e) {
       throw ErrorHandler.handleDioError(e);
     }
@@ -89,7 +89,7 @@ class ApiService {
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
-      return await _dio.post(
+      return await _dio.put(
         path,
         data: data,
         queryParameters: queryParameters,

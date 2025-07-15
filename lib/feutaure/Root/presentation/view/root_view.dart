@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:tcp/feutaure/ProductionSettings/presentation/view/production_settings_page.dart';
 import 'package:tcp/feutaure/home/presentation/view/home_view.dart';
 
 class HomePageNavigationBar extends StatefulWidget {
@@ -21,7 +22,7 @@ class _HomePageState extends State<HomePageNavigationBar> {
 
   final List<Widget> _pages = const [
     HomeView(),
-    HomeView(),
+    ProductionSettingsPage(),
     HomeView(),
     Center(child: Text("الإعدادات", style: TextStyle(fontSize: 24))),
   ];

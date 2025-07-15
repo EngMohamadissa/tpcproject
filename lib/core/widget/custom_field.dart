@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:tcp/core/util/const.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +23,7 @@ class CustomTextField extends StatefulWidget {
   final String? labelText;
   final FloatingLabelBehavior? floatingLabelBehavior;
   final Widget? suffix;
-
+  final List<TextInputFormatter>? inputFormatters;
   const CustomTextField({
     super.key,
     this.hint,
@@ -45,6 +46,7 @@ class CustomTextField extends StatefulWidget {
     this.labelText,
     this.floatingLabelBehavior,
     this.suffix,
+    this.inputFormatters,
   });
 
   @override
@@ -63,6 +65,7 @@ class CustomTextFieldState extends State<CustomTextField> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
       child: TextFormField(
+        inputFormatters: widget.inputFormatters,
         readOnly: widget.readOnly,
         maxLines: widget.maxLines,
         maxLength: widget.maxLength,

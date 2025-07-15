@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:tcp/core/util/apiservice.dart';
+import 'package:tcp/feutaure/ProductionSettings/presentation/manger/cubit/get_product_setting_cubit.dart';
+import 'package:tcp/feutaure/ProductionSettings/repo/production_settings_repo.dart';
 
 class Palette {
   Palette._();
   static const Color primary = Color(0XFF1460F2);
+  static const Color primarySuccess = Colors.green;
+  static const Color primaryError = Colors.red;
+
   static const Color primaryDark = Color(0XFFFFFFFF);
   static const Color primaryLight = Color(0XFFFAFAFA);
   static const Color backgroundColor = Color(0xffF5F2F2);
@@ -19,3 +25,8 @@ class MyAppColors {
   static Color kOnBoardingColor = const Color(0XFFFEFEFE);
   static Color kGrayscale40 = const Color(0XFFAEAEB2);
 }
+
+final apiService = ApiService();
+final productionSettingsRepo = ProductionSettingsRepo(apiService);
+final productionSettingsCubit =
+    ProductionSettingsCubit(repository: productionSettingsRepo);
