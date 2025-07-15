@@ -22,6 +22,12 @@ abstract class Styles {
     color: Palette.primary,
   );
 
+  static const textStyle15 = TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.bold,
+    color: Palette.primary,
+  );
+
   static var textStyle14 = TextStyle(
     color: Colors.grey[600],
     fontSize: 14,

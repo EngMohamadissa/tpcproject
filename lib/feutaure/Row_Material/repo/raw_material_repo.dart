@@ -67,4 +67,38 @@ class RawMaterialRepository {
           'حدث خطأ غير متوقع أثناء جلب المواد الخام: ${e.toString()}');
     }
   }
+
+  Future<List<GetRawMaterial>> searchRawMaterials({
+    String? name,
+    String? description,
+    String? status,
+    double? minPrice,
+    double? maxPrice,
+    double? minStockAlert,
+  }) async {
+    final queryParameters = <String, dynamic>{};
+
+    if (name != null && name.isNotEmpty) queryParameters['name'] = name;
+    if (description != null && description.isNotEmpty) {
+      queryParameters['description'] = description;
+    }
+    if (status != null && status.isNotEmpty) queryParameters['status'] = status;
+    if (minPrice != null) queryParameters['price_min'] = minPrice;
+    if (maxPrice != null) queryParameters['price_max'] = maxPrice;
+    if (minStockAlert != null) {
+      queryParameters['minimum_stock_alert'] = minStockAlert;
+    }
+
+    final response = await apiService.get(
+      'search/raw-materials',
+      queryParameters: queryParameters,
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = response.data['data'];
+      return data.map((json) => GetRawMaterial.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to search raw materials: ${response.statusCode}');
+    }
+  }
 }

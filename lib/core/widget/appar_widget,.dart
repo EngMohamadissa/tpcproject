@@ -20,7 +20,12 @@ class AppareWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBar(
       actions: [
-        Icon(Icons.ad_units),
+        if (actions != null) ...actions!,
+        SizedBox(
+          width: 10,
+        ),
+        const Icon(Icons.ad_units), // الشعار دايمًا موجود
+        // إضافة الأيقونات الإضافية إذا موجودة
       ],
       automaticallyImplyLeading: automaticallyImplyLeading,
       leading: leading,

@@ -2,7 +2,7 @@
 import 'package:bloc/bloc.dart';
 
 import 'package:tcp/feutaure/Row_Material/data/add_raw_material_model.dart';
-import 'package:tcp/feutaure/Row_Material/presentation/view/manager/add_raw_material_state.dart';
+import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_add/add_raw_material_state.dart';
 import 'package:tcp/feutaure/Row_Material/repo/raw_material_repo.dart';
 
 class AddRawMaterialCubit extends Cubit<AddRawMaterialState> {
