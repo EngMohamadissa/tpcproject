@@ -8,8 +8,8 @@ import 'package:tcp/feutaure/Row_Material/presentation/view/add_raw_material_vie
 import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_get/get_raw_material_cubit.dart';
 import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_search/search_raw_material_cubit_cubit.dart';
 import 'package:tcp/feutaure/Row_Material/presentation/view/widget/raw_materials_list_body.dart';
+import 'package:tcp/feutaure/Row_Material/presentation/view/widget/search_material_view.dart';
 import 'package:tcp/feutaure/Row_Material/repo/raw_material_repo.dart';
-import 'package:tcp/flterraw.dart';
 
 class RawMaterialsListPage extends StatelessWidget {
   const RawMaterialsListPage({super.key});
