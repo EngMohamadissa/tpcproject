@@ -12,7 +12,8 @@ import 'package:tcp/view_models/auth_cubit/auth_state.dart';
 class AuthCubit extends Cubit<AuthState> {
   final SharedPreferences sharedPreferences;
   AuthCubit(this.sharedPreferences) : super(AuthInitial());
-  final TextEditingController email = TextEditingController();
+  final TextEditingController email =
+      TextEditingController(text: 'michael@gmail.com');
   final TextEditingController phone = TextEditingController();
   final TextEditingController name = TextEditingController();
   final TextEditingController password = TextEditingController();

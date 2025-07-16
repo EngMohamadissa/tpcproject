@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:tcp/feutaure/Row_Material/data/get_raw_material_model.dart';
-import 'package:tcp/feutaure/Row_Material/presentation/view/manager/get_raw_material_state.dart';
+import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_get/get_raw_material_state.dart';
 import 'package:tcp/feutaure/Row_Material/repo/raw_material_repo.dart'; // تأكد من المسار الصحيح للموديل
 
 // class GetRawMaterialsCubit extends Cubit<GetRawMaterialsState> {
@@ -53,10 +53,10 @@ class GetRawMaterialsCubit extends Cubit<GetRawMaterialsState> {
     if (_allRawMaterials.isEmpty) return;
 
     List<GetRawMaterial> filteredList;
-    if (status == 'الكل') {
+    if (status == 'All') {
       filteredList = _allRawMaterials;
     } else {
-      if (status == 'مستخدمة') {
+      if (status == 'Used') {
         status = 'used';
       } else {
         status = 'unused';
