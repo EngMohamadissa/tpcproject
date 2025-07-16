@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tcp/constants/my_app_colors.dart';
 
-Widget buildPropertyItem(IconData icon, String title, String value) {
+Widget buildPropertyItem(
+    IconData icon, String title, String value, void Function() onTap) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       InkWell(
         borderRadius: BorderRadius.circular(22),
-        onTap: () {},
+        onTap: onTap,
         child: Container(
           padding: EdgeInsets.all(8.w),
           decoration: BoxDecoration(

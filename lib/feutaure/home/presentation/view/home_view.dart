@@ -37,7 +37,7 @@ class HomeView extends StatelessWidget {
                           MaterialPageRoute(
                               builder: (context) => RawMaterialsListPage()));
                     },
-                    tite: 'مواد الخام',
+                    tite: 'Rwo Materials',
                     iconData: Icons.check_circle,
                     listColor: [
                       Color(0xFF1976D2),
@@ -47,7 +47,7 @@ class HomeView extends StatelessWidget {
                   const SizedBox(width: 20),
                   Expanded(
                       child: BirthdayCard(
-                    tite: 'مواد غير مستخدمة',
+                    tite: 'Products',
                     iconData: Icons.cancel,
                     listColor: [
                       Color.fromARGB(255, 244, 139, 54),
@@ -59,7 +59,7 @@ class HomeView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            buildPropertiesContainer(),
+            buildPropertiesContainer(context),
           ],
         ),
       ),

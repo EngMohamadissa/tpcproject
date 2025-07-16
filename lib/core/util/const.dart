@@ -30,3 +30,16 @@ final apiService = ApiService();
 final productionSettingsRepo = ProductionSettingsRepo(apiService);
 final productionSettingsCubit =
     ProductionSettingsCubit(repository: productionSettingsRepo);
+
+Color getRoleColor(String role) {
+  switch (role.toLowerCase()) {
+    case 'admin':
+      return Colors.red.shade600;
+    case 'accountant':
+      return Colors.purple.shade600;
+    case 'warehouse_keeper':
+      return Colors.orange.shade600;
+    default:
+      return Colors.grey.shade600;
+  }
+}

@@ -59,7 +59,7 @@ class CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
-    final double horizontalPadding = screenSize.width * 0.08;
+    final double horizontalPadding = screenSize.width * 0.02;
     final double textSize = screenSize.width < 600 ? 14 : 16;
 
     return Padding(

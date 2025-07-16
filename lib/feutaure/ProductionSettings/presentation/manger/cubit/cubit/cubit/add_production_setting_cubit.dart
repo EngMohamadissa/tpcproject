@@ -5,13 +5,13 @@ import 'package:tcp/feutaure/ProductionSettings/data/model/add_production_settin
 import 'package:tcp/feutaure/ProductionSettings/presentation/manger/cubit/cubit/cubit/add_production_setting_state.dart';
 import 'package:tcp/feutaure/ProductionSettings/repo/production_settings_repo.dart';
 
-class AddProductionSettingsCubit extends Cubit<AddProductionSettingsState> {
+class AddProductionSettingsCubit extends Cubit<AddProductionSettingState> {
   final ProductionSettingsRepo repository;
 
   AddProductionSettingsCubit({required this.repository})
-      : super(AddProductionSettingState());
+      : super(AddProductionSettingsInitial());
 
-  Future<void> createProductionSettings({
+  Future<void> addProductionSettings({
     required double totalProduction,
     required String type,
     required double profitRatio,
@@ -21,7 +21,7 @@ class AddProductionSettingsCubit extends Cubit<AddProductionSettingsState> {
   }) async {
     emit(AddProductionSettingsLoading());
     try {
-      final settings = ProductionSettings(
+      final settings = AddProductionSettingsModel(
         totalProduction: totalProduction,
         type: type,
         profitRatio: profitRatio,
@@ -29,15 +29,36 @@ class AddProductionSettingsCubit extends Cubit<AddProductionSettingsState> {
         year: year,
         notes: notes,
       );
+      await repository.addProductionSettings(settings);
+      emit(AddProductionSettingsSuccess());
+    } catch (e) {
+      emit(AddProductionSettingsFailure(e.toString()));
+    }
+  }
 
-      final createdSettings =
-          await repository.createProductionSettings(settings);
-      emit(AddProductionSettingsCreated(createdSettings));
-    } on DioException catch (e) {
-      String errorMessage = ErrorHandler.handleDioError(e);
-      emit(AddProductionSettingsError(errorMessage));
-    } catch (error) {
-      emit(AddProductionSettingsError(error.toString()));
+  Future<void> updateProductionSettings({
+    required int id,
+    required double totalProduction,
+    required double profitRatio,
+    String? notes,
+  }) async {
+    emit(ProductionSettingsUpdating());
+    try {
+      await repository.updateProductionSettings(
+          id, totalProduction, profitRatio, notes);
+      emit(ProductionSettingsUpdated());
+    } catch (e) {
+      emit(ProductionSettingsUpdateFailed(e.toString()));
+    }
+  }
+
+  Future<void> deleteProductionSettings(int id) async {
+    emit(ProductionSettingsDeleting());
+    try {
+      await repository.deleteProductionSettings(id);
+      emit(ProductionSettingsDeleted());
+    } catch (e) {
+      emit(ProductionSettingsDeleteFailed(e.toString()));
     }
   }
 }

@@ -48,8 +48,8 @@ class _SplashSreenState extends State<SplashSreen> {
                 .scale(begin: const Offset(0.5, 0.5), duration: 1200.ms),
             30.verticalSpace,
             Text("  Welcome to T P C",
-                    style: Styles.textStyle18Bold
-                        .copyWith(color: MyAppColors.kPrimary))
+                    style: Styles.textStyle24.copyWith(
+                        color: const Color.fromARGB(255, 62, 103, 174)))
                 .animate(delay: 1000.ms)
                 .fadeIn(duration: 1000.ms)
                 .slide(begin: const Offset(0, 0.3)),

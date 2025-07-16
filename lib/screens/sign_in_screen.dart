@@ -119,7 +119,7 @@ class SignInScreen extends StatelessWidget {
                               String email = value.substring(0, index);
                               if (int.tryParse(email) != null ||
                                   double.tryParse(email) != null ||
-                                  email.length < 5) {
+                                  email.length < 2) {
                                 return "invalid email";
                               }
                               return null;
