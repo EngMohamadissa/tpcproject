@@ -12,33 +12,28 @@ import 'package:tcp/feutaure/allUsers/presentation/manger/cubit/user_cubit.dart'
 import 'package:tcp/feutaure/allUsers/presentation/manger/cubit/user_state.dart';
 import 'package:tcp/feutaure/allUsers/repo/user_repo.dart';
 
-class EditUserScreen extends StatefulWidget {
-  final int userId; // ID of the user to edit
-  final UserModel currentUser; // Current user data to pre-fill fields
+class EditProfileScreen extends StatefulWidget {
+  final int userId;
+  final UserModel currentUser;
 
-  const EditUserScreen(
-      {super.key, required this.userId, required this.currentUser});
+  const EditProfileScreen({
+    super.key,
+    required this.userId,
+    required this.currentUser,
+  });
 
   @override
-  State<EditUserScreen> createState() => _EditUserScreenState();
+  State<EditProfileScreen> createState() => _EditProfileScreenState();
 }
 
-class _EditUserScreenState extends State<EditUserScreen> {
+class _EditProfileScreenState extends State<EditProfileScreen> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
   late TextEditingController _emailController;
   late TextEditingController _phoneController;
-  late String _selectedRole;
-  late bool _isActive;
+  late TextEditingController _passwordController;
 
   late UsersCubit _usersCubit;
-
-  final List<String> _userRoles = [
-    'admin', // أضف admin هنا لتجنب خطأ إذا كان المستخدم الحالي admin
-    'accountant',
-    'warehouse_keeper',
-    // يمكن إضافة أدوار أخرى إذا كانت موجودة
-  ]; // Available roles
 
   @override
   void initState() {
@@ -48,8 +43,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
     _nameController = TextEditingController(text: widget.currentUser.name);
     _emailController = TextEditingController(text: widget.currentUser.email);
     _phoneController = TextEditingController(text: widget.currentUser.phone);
-    _selectedRole = widget.currentUser.userRole;
-    _isActive = widget.currentUser.flag == 1; // Convert 0/1 to bool
+    _passwordController = TextEditingController(); // تهيئة متحكم كلمة المرور
   }
 
   @override
@@ -57,7 +51,8 @@ class _EditUserScreenState extends State<EditUserScreen> {
     _nameController.dispose();
     _emailController.dispose();
     _phoneController.dispose();
-    _usersCubit.close(); // Close the cubit
+    _passwordController.dispose();
+    _usersCubit.close();
     super.dispose();
   }
 
@@ -68,32 +63,30 @@ class _EditUserScreenState extends State<EditUserScreen> {
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: AppareWidget(
           automaticallyImplyLeading: true,
-          title: 'Edit User: ${widget.currentUser.name}',
+          title: 'Update : ${widget.currentUser.name}',
         ),
       ),
       body: BlocProvider<UsersCubit>.value(
-        value: _usersCubit, // Provide the same cubit instance
+        value: _usersCubit,
         child: BlocConsumer<UsersCubit, UsersState>(
           listener: (context, state) {
             if (state is UserUpdated) {
               showCustomSnackBar(context, state.message,
                   color: Palette.primarySuccess);
 
-              Navigator.pop(context, true); // Return with update success signal
+              Navigator.pop(context, true);
             } else if (state is UserUpdateFailed) {
               showCustomAlertDialog(
                 context: context,
-                title: 'Sorry! 😢',
-                content: 'Failed to update user: ${state.errorMessage}',
+                title: 'عذراً! 😢',
+                content: 'فشل تحديث المستخدم: ${state.errorMessage}',
               );
             }
           },
           builder: (context, state) {
-            // If fetching user data (if you enabled fetchUserById)
             if (state is UserUpdating && state.userId == widget.userId) {
               return const Center(child: CircularProgressIndicator());
             }
-            // Show the form after loading data or in initial state
             return SingleChildScrollView(
               padding: const EdgeInsets.all(20.0),
               child: Form(
@@ -102,7 +95,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'Edit User Details:',
+                      'تفاصيل المستخدم:',
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -111,10 +104,10 @@ class _EditUserScreenState extends State<EditUserScreen> {
                     const SizedBox(height: 25),
                     CustomTextField(
                       controller: _nameController,
-                      label: Text('Name'),
+                      label: const Text('الاسم'),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter name';
+                          return 'الرجاء إدخال الاسم';
                         }
                         return null;
                       },
@@ -122,14 +115,14 @@ class _EditUserScreenState extends State<EditUserScreen> {
                     const SizedBox(height: 20),
                     CustomTextField(
                       controller: _emailController,
-                      label: Text('Email'),
+                      label: const Text('البريد الإلكتروني'),
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter email';
+                          return 'الرجاء إدخال البريد الإلكتروني';
                         }
                         if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                          return 'Please enter a valid email';
+                          return 'الرجاء إدخال بريد إلكتروني صحيح';
                         }
                         return null;
                       },
@@ -137,66 +130,46 @@ class _EditUserScreenState extends State<EditUserScreen> {
                     const SizedBox(height: 20),
                     CustomTextField(
                       controller: _phoneController,
-                      label: Text('Phone'),
+                      label: const Text('رقم الهاتف'),
                       keyboardType: TextInputType.phone,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter phone number';
+                          return 'الرجاء إدخال رقم الهاتف';
                         }
                         return null;
                       },
                     ),
                     const SizedBox(height: 20),
-                    DropdownButtonFormField<String>(
-                      value: _selectedRole,
-                      decoration: inputDecoration('User Role', Icons.category),
-                      items: _userRoles.map((role) {
-                        return DropdownMenuItem(
-                          value: role,
-                          child: Text(role.toUpperCase()),
-                        );
-                      }).toList(),
-                      onChanged: (newValue) {
-                        if (newValue != null) {
-                          setState(() {
-                            _selectedRole = newValue;
-                          });
-                        }
-                      },
+                    // حقل كلمة المرور (اختياري)
+                    CustomTextField(
+                      controller: _passwordController,
+                      label: const Text('كلمة المرور (اختياري)'),
+                      keyboardType: TextInputType.visiblePassword,
+                      obscureText: true, // لإخفاء النص
                       validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please select user role';
+                        // كلمة المرور اختيارية، لذا لا تطلبها إلا إذا أدخلها المستخدم
+                        if (value != null &&
+                            value.isNotEmpty &&
+                            value.length < 6) {
+                          return 'يجب أن تكون كلمة المرور 6 أحرف على الأقل';
                         }
-                        return null;
+                        return null; // لا يوجد خطأ إذا كانت فارغة
                       },
                     ),
-                    const SizedBox(height: 20),
-                    SwitchListTile(
-                      title: const Text('Account Active',
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w500)),
-                      value: _isActive,
-                      onChanged: (bool newValue) {
-                        setState(() {
-                          _isActive = newValue;
-                        });
-                      },
-                      activeColor: Colors.green,
-                      inactiveThumbColor: Colors.red,
-                      inactiveTrackColor: Colors.red.shade100,
-                    ),
+
                     const SizedBox(height: 30),
                     CustomButton(
-                      text: "Save Changes",
+                      text: "حفظ التغييرات",
                       onTap: () {
                         if (_formKey.currentState!.validate()) {
-                          _usersCubit.updateUser(
+                          _usersCubit.updateProfile(
                             userId: widget.userId,
                             name: _nameController.text,
                             email: _emailController.text,
                             phone: _phoneController.text,
-                            userRole: _selectedRole,
-                            flag: _isActive,
+                            password: _passwordController.text.isNotEmpty
+                                ? _passwordController.text
+                                : null,
                           );
                         }
                       },
@@ -208,17 +181,6 @@ class _EditUserScreenState extends State<EditUserScreen> {
           },
         ),
       ),
-    );
-  }
-
-  // Helper function to create consistent Input Decoration
-  InputDecoration inputDecoration(String label, IconData icon) {
-    return InputDecoration(
-      labelText: label,
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-      prefixIcon: Icon(icon, color: Colors.blueGrey.shade700),
-      filled: true,
-      fillColor: Colors.blueGrey.shade50,
     );
   }
 }

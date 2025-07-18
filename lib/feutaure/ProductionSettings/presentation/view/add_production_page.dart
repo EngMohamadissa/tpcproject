@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tcp/core/util/const.dart';
+import 'package:tcp/core/util/func/show.dart';
 import 'package:tcp/core/widget/appar_widget,.dart';
 import 'package:tcp/core/widget/custom_button.dart';
 import 'package:tcp/core/widget/custom_field.dart';
@@ -44,20 +45,12 @@ class _AddProductionSettingsScreenState
             BlocConsumer<AddProductionSettingsCubit, AddProductionSettingState>(
           listener: (context, state) {
             if (state is AddProductionSettingsSuccess) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Production settings added successfully!'),
-                  backgroundColor: Colors.green,
-                ),
-              );
+              showCustomSnackBar(
+                  context, 'Production settings added successfully!',
+                  color: Palette.primarySuccess);
             } else if (state is AddProductionSettingsFailure) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content:
-                      Text('Failed to add settings: ${state.errorMessage}'),
-                  backgroundColor: Colors.red,
-                ),
-              );
+              showCustomSnackBar(context, state.errorMessage,
+                  color: Palette.primaryDark);
             }
           },
           builder: (context, state) {

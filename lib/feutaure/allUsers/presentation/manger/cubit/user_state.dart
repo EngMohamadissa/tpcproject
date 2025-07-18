@@ -65,3 +65,20 @@ class UserProfileError extends UsersState {
   final String errorMessage;
   UserProfileError(this.errorMessage);
 }
+
+class UserDeleting extends UsersState {
+  final int userId;
+  UserDeleting(this.userId); // لتحديد أي مستخدم يتم حذفه
+}
+
+class UserDeleted extends UsersState {
+  final int userId;
+  final String message;
+  UserDeleted(this.userId, this.message);
+}
+
+class UserDeleteFailed extends UsersState {
+  final int userId; // لتحديد أي مستخدم فشل حذفه
+  final String errorMessage;
+  UserDeleteFailed(this.userId, this.errorMessage);
+}

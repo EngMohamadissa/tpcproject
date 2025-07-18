@@ -13,7 +13,7 @@ class AuthCubit extends Cubit<AuthState> {
   final SharedPreferences sharedPreferences;
   AuthCubit(this.sharedPreferences) : super(AuthInitial());
   final TextEditingController email =
-      TextEditingController(text: 'michael@gmail.com');
+      TextEditingController(text: 'mic@gmail.com');
   final TextEditingController phone = TextEditingController();
   final TextEditingController name = TextEditingController();
   final TextEditingController password = TextEditingController();

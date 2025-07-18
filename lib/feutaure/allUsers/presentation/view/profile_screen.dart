@@ -3,16 +3,25 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tcp/core/util/apiservice.dart';
 import 'package:tcp/core/util/const.dart';
 import 'package:tcp/core/util/func/alert_dilog.dart'; // لتنبيهات الأخطاء
+import 'package:tcp/core/util/func/show.dart';
+import 'package:tcp/core/util/styles.dart';
 import 'package:tcp/core/widget/appar_widget,.dart'; // للـ AppBar المخصص
+import 'package:tcp/core/widget/cusrom_button_card.dart';
 import 'package:tcp/core/widget/error_widget_view.dart'; // لعرض أخطاء الجلب
+import 'package:tcp/feutaure/allUsers/data/model/user_model.dart';
 import 'package:tcp/feutaure/allUsers/presentation/manger/cubit/user_cubit.dart';
 import 'package:tcp/feutaure/allUsers/presentation/manger/cubit/user_state.dart';
+import 'package:tcp/feutaure/allUsers/presentation/user_view.dart';
+import 'package:tcp/feutaure/allUsers/presentation/view/edit_profile_screen.dart';
+import 'package:tcp/feutaure/allUsers/presentation/view/edit_user_screen.dart';
 import 'package:tcp/feutaure/allUsers/repo/user_repo.dart';
 
 class ProfileScreen extends StatefulWidget {
-  final int userId; // ID المستخدم الذي نريد عرض بروفايله
+  final int userId;
+  final UserModel userModel;
 
-  const ProfileScreen({super.key, required this.userId});
+  const ProfileScreen(
+      {super.key, required this.userId, required this.userModel});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -54,6 +63,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 title: 'عذراً! 😢',
                 content: 'فشل في تحميل الملف الشخصي: ${state.errorMessage}',
               );
+            } else if (state is UserDeleteFailed) {
+              showCustomAlertDialog(
+                context: context,
+                title: 'عذراً! 😢',
+                content: 'فشل في حذف الملف الشخصي: ${state.errorMessage}',
+              );
+            }
+            if (state is UserDeleted) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => UsersListScreen()),
+              );
+
+              showCustomSnackBar(context, 'تم  حذف بنجاح ',
+                  color: Palette.primarySuccess);
             }
           },
           builder: (context, state) {
@@ -149,37 +173,67 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ],
                     ),
                     const SizedBox(height: 30),
-                    // زر تعديل البروفايل (اختياري)
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        // يمكنك التنقل لصفحة EditUserScreen هنا
-                        // وتمرير user.id و user object
-                        // final result = await Navigator.push(context, MaterialPageRoute(builder: (c) => EditUserScreen(userId: user.id, currentUser: user)));
-                        // if (result == true) { _usersCubit.fetchUserProfile(widget.userId); } // تحديث البروفايل بعد التعديل
-                        showCustomAlertDialog(
-                            context: context,
-                            title: 'تعديل',
-                            content: 'هذه الوظيفة قيد الإنشاء!');
-                      },
-                      icon: const Icon(Icons.edit, color: Colors.white),
-                      label: const Text('تعديل الملف الشخصي',
-                          style: TextStyle(color: Colors.white, fontSize: 16)),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blueGrey,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 30, vertical: 12),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        elevation: 5,
-                      ),
-                    ),
+                    ButtonINCard(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => EditProfileScreen(
+                                      userId: widget.userId,
+                                      currentUser: widget.userModel,
+                                    )),
+                          );
+                        },
+                        icon: Icon(Icons.edit, color: Colors.white),
+                        label: Text(
+                          'Update Profile',
+                          style:
+                              Styles.textStyle18.copyWith(color: Colors.white),
+                        )),
+                    const SizedBox(height: 30),
+                    ButtonINCard(
+                        onPressed: () {
+                          showCustomAlertDialog(
+                              context: context,
+                              title: 'انتبه ',
+                              content: "هل  انت  متاكد من حذف هذا المستخدم",
+                              actions: [
+                                ButtonINCard(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    icon: Text(
+                                      'ألغاء',
+                                      style: Styles.textStyle18
+                                          .copyWith(color: Colors.white),
+                                    ),
+                                    label: Icon(
+                                      Icons.arrow_back,
+                                      color: Colors.white,
+                                    )),
+                                ButtonINCard(
+                                    onPressed: () {
+                                      context
+                                          .read<UsersCubit>()
+                                          .deleteUser(widget.userId);
+                                    },
+                                    icon: Text('متاكد'),
+                                    label: Icon(Icons.done)),
+                              ]);
+                        },
+                        icon: Icon(Icons.delete, color: Colors.white),
+                        label: Text(
+                          'Delete Profile',
+                          style:
+                              Styles.textStyle18.copyWith(color: Colors.white),
+                        )),
                   ],
                 ),
               );
             } else if (state is UserProfileError) {
               return Center(
                 child: ErrorWidetView(
-                  message: 'خطأ في تحميل الملف الشخصي: ${state.errorMessage}',
+                  message: ' ${state.errorMessage}',
                   onPressed: () {
                     _usersCubit
                         .fetchUserProfile(widget.userId); // إعادة المحاولة

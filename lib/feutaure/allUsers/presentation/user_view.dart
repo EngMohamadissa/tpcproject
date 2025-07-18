@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tcp/core/util/apiservice.dart';
 import 'package:tcp/core/util/const.dart';
 import 'package:tcp/core/util/func/alert_dilog.dart';
+import 'package:tcp/core/util/func/show.dart';
 import 'package:tcp/core/util/styles.dart';
 import 'package:tcp/core/widget/appar_widget,.dart';
 import 'package:tcp/core/widget/cusrom_button_card.dart';
@@ -60,9 +61,8 @@ class _UsersListScreenState extends State<UsersListScreen> {
                 content: state.errorMessage,
               );
             } else if (state is UserActivationChanged) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.message)),
-              );
+              showCustomSnackBar(context, state.message,
+                  color: Palette.primarySuccess);
             } else if (state is UserActivationChangeFailed) {
               showCustomAlertDialog(
                 context: context,
@@ -71,9 +71,8 @@ class _UsersListScreenState extends State<UsersListScreen> {
                     'Failed to change user activation status: ${state.errorMessage}',
               );
             } else if (state is UserUpdated) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.message)),
-              );
+              showCustomSnackBar(context, state.message,
+                  color: Palette.primarySuccess);
             } else if (state is UserUpdateFailed) {
               showCustomAlertDialog(
                 context: context,
@@ -213,7 +212,8 @@ class _UsersListScreenState extends State<UsersListScreen> {
                             child: ButtonINCard(
                               icon: Text(
                                 isUpdatingUser ? 'Updating...' : 'Update',
-                                style: const TextStyle(color: Colors.white),
+                                style: Styles.textStyle18
+                                    .copyWith(color: Colors.white),
                               ),
                               label: isUpdatingUser
                                   ? const SizedBox(
@@ -245,18 +245,20 @@ class _UsersListScreenState extends State<UsersListScreen> {
                           const SizedBox(height: 17),
                           Center(
                             child: ButtonINCard(
-                              icon: Icon(Icons.edit, color: Colors.white),
-                              label: Text(
+                              label: Icon(Icons.edit, color: Colors.white),
+                              icon: Text(
                                 'Profile',
-                                style: Styles.textStyle18Bold,
+                                style: Styles.textStyle18
+                                    .copyWith(color: Colors.white),
                               ),
                               onPressed: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => ProfileScreen(
-                                        userId: state.users[index]
-                                            .id), // هنا ID المستخدم المراد عرض بروفايله
+                                      userId: state.users[index].id,
+                                      userModel: state.users[index],
+                                    ), // هنا ID المستخدم المراد عرض بروفايله
                                   ),
                                 );
                               },

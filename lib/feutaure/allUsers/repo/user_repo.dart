@@ -72,4 +72,38 @@ class UserRepoImpl {
       throw Exception('فشل في جلب بيانات المستخدم: $e');
     }
   }
+
+  Future<UserModel> updateProfile(
+      int userId, Map<String, dynamic> userData) async {
+    try {
+      final response = await _apiService.update(
+        'user/update/$userId', // المسار مع الـ ID
+        data:
+            userData, // البيانات التي تم تمريرها (بما في ذلك كلمة المرور إذا وجدت)
+      );
+      if (response.data != null && response.data['user'] != null) {
+        return UserModel.fromJson(response.data['user']);
+      } else {
+        throw Exception('تنسيق استجابة غير صالح لتحديث المستخدم');
+      }
+    } on DioException catch (e) {
+      throw ErrorHandler.handleDioError(e);
+    } catch (e) {
+      throw Exception('فشل في تحديث المستخدم: $e');
+    }
+  }
+
+  Future<Map<String, dynamic>> deleteUser(int userId) async {
+    // <--- تطبيق الدالة
+    try {
+      final response = await _apiService
+          .delete('user/delete/$userId'); // استخدام دالة delete
+      return response.data
+          as Map<String, dynamic>; // عادةً ما تعود رسالة وstatus
+    } on DioException catch (e) {
+      throw ErrorHandler.handleDioError(e);
+    } catch (e) {
+      throw Exception('فشل في حذف المستخدم: $e');
+    }
+  }
 }

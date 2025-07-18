@@ -66,9 +66,56 @@ class UsersCubit extends Cubit<UsersState> {
     emit(UserProfileLoading()); // إصدار حالة تحميل خاصة بالبروفايل
     try {
       final user = await repository.getUserById(userId);
-      emit(UserProfileLoaded(user)); // إصدار حالة تحميل ناجحة
+      emit(UserProfileLoaded(user));
     } catch (e) {
-      emit(UserProfileError(e.toString())); // إصدار حالة خطأ
+      emit(UserProfileError(e.toString()));
+    }
+  }
+
+  Future<void> updateProfile({
+    required int userId,
+    required String name,
+    required String email,
+    required String phone,
+    String? password,
+  }) async {
+    emit(UserUpdating(userId));
+    try {
+      final Map<String, dynamic> userData = {
+        "name": name,
+        "email": email,
+        "phone": phone,
+      };
+      if (password != null && password.isNotEmpty) {
+        userData["password"] = password;
+      }
+
+      final updatedUser = await repository.updateUser(userId, userData);
+      emit(UserUpdated(updatedUser, "تم تحديث المستخدم بنجاح."));
+      await fetchAllUsers();
+    } catch (e) {
+      emit(UserUpdateFailed(userId, e.toString()));
+      await fetchAllUsers();
+    }
+  }
+
+  Future<void> deleteUser(int userId) async {
+    emit(UserDeleting(userId)); // نخبر الـ UI بأن هذا المستخدم قيد الحذف
+
+    try {
+      final response = await repository.deleteUser(userId);
+      final String message = response['message'] as String? ??
+          'تم حذف المستخدم بنجاح.'; // رسالة افتراضية
+
+      emit(UserDeleted(userId, message));
+
+      // الأهم: بعد حذف المستخدم بنجاح، أعد جلب قائمة المستخدمين
+      // لتعكس التغيير في الواجهة (إزالة المستخدم المحذوف).
+      await fetchAllUsers();
+    } catch (e) {
+      emit(UserDeleteFailed(userId, e.toString()));
+      // إذا حدث خطأ، قد ترغب أيضاً في إعادة جلب القائمة لضمان التناسق
+      await fetchAllUsers(); // هذا سيقوم بإعادة تعيين الحالة إلى UsersLoading ثم UsersLoaded/UsersError
     }
   }
 }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tcp/core/util/styles.dart';
+import 'package:tcp/feutaure/ProductSaleReports/presentation/view/ReportsControlScreen.dart';
 import 'package:tcp/feutaure/ProductionSettings/presentation/view/get_production_setting_by_month_page.dart';
 import 'package:tcp/feutaure/allUsers/presentation/user_view.dart';
+import 'package:tcp/feutaure/conversions/presentation/view/conversions_list_screen.dart';
 import 'package:tcp/feutaure/home/presentation/view/widget/build_property_item.dart';
+import 'package:tcp/feutaure/profit-loss-report/presentation/view/profit_loss_view.dart';
 
 Widget buildPropertiesContainer(BuildContext context) {
   return Column(
@@ -26,7 +29,12 @@ Widget buildPropertiesContainer(BuildContext context) {
         mainAxisSpacing: 8.h,
         padding: EdgeInsets.symmetric(horizontal: 4.w),
         children: [
-          buildPropertyItem(Icons.scale, 'الكمية', '150 كجم', () {}),
+          buildPropertyItem(Icons.scale, 'Conversions', 'TPC', () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ConversionsListScreen()),
+            );
+          }),
           buildPropertyItem(Icons.person, 'All Users', 'TPC', () {
             Navigator.push(
               context,
@@ -35,7 +43,6 @@ Widget buildPropertiesContainer(BuildContext context) {
               ),
             );
           }),
-          buildPropertyItem(Icons.grade, 'الجودة', 'ممتازة', () {}),
           buildPropertyItem(Icons.date_range, 'Production Settings', '2023-10',
               () {
             Navigator.push(
@@ -44,7 +51,18 @@ Widget buildPropertiesContainer(BuildContext context) {
                   builder: (context) => ProductionSettingsOverviewScreen()),
             );
           }),
-          buildPropertyItem(Icons.event_busy, 'الانتهاء', '2024-10-15', () {}),
+          buildPropertyItem(Icons.grade, 'Profit Loss ', 'Reports', () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ProfitLossReportScreen()),
+            );
+          }),
+          buildPropertyItem(Icons.event_busy, 'Product Sale', 'Reports', () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ReportsControlScreen()),
+            );
+          }),
           buildPropertyItem(Icons.place, 'المكان', 'المستودع أ', () {}),
           buildPropertyItem(Icons.trending_up, 'المعدل', '5 كجم/يوم', () {}),
           buildPropertyItem(Icons.thermostat, 'الحرارة', '25°C', () {}),

@@ -149,7 +149,7 @@ class RegisterScreen extends StatelessWidget {
                             String email = value.substring(0, index);
                             if (int.tryParse(email) != null ||
                                 double.tryParse(email) != null ||
-                                email.length < 5) {
+                                email.length < 3) {
                               return "invalid email";
                             }
                             return null;
@@ -202,8 +202,6 @@ class RegisterScreen extends StatelessWidget {
                           validate: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter a phone number';
-                            } else if (!isValidSyrianPhoneNumber(value)) {
-                              return 'Invalid Syrian phone number';
                             }
                             return null;
                           },
