@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tcp/core/util/const.dart';
 
 class ErrorWidetView extends StatelessWidget {
   final void Function()? onPressed;
@@ -17,12 +18,12 @@ class ErrorWidetView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.error_outline, color: Colors.red, size: 60),
+            const Icon(Icons.reset_tv, color: Palette.primary, size: 60),
             const SizedBox(height: 16),
             Text(
-              'Error: $message',
+              message,
               textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.red, fontSize: 16),
+              style: const TextStyle(color: Palette.primary, fontSize: 16),
             ),
             const SizedBox(height: 24),
             ElevatedButton.icon(

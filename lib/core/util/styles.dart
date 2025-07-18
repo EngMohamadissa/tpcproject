@@ -16,8 +16,8 @@ abstract class Styles {
     fontWeight: FontWeight.normal,
     // fontFamily: kGTSectraFineRegular,
   );
-  static const textStyle28 = TextStyle(
-    fontSize: 28,
+  static const textStyle24 = TextStyle(
+    fontSize: 24,
     fontWeight: FontWeight.bold,
     color: Palette.primary,
   );

@@ -1,12 +1,12 @@
-class ProductionSettings {
+class AddProductionSettingsModel {
   final double totalProduction;
-  final String type; // 'estimated' or 'real'
+  final String type; // "estimated" or "real"
   final double profitRatio;
   final int month;
   final int year;
-  final String? notes;
+  final String? notes; // Nullable as per your example
 
-  ProductionSettings({
+  AddProductionSettingsModel({
     required this.totalProduction,
     required this.type,
     required this.profitRatio,
@@ -15,23 +15,25 @@ class ProductionSettings {
     this.notes,
   });
 
-  Map<String, dynamic> toJson() => {
-        'total_production': totalProduction,
-        'type': type,
-        'profit_ratio': profitRatio,
-        'month': month,
-        'year': year,
-        'notes': notes,
-      };
-
-  factory ProductionSettings.fromJson(Map<String, dynamic> json) {
-    return ProductionSettings(
-      totalProduction: double.parse(json['total_production'].toString()),
-      type: json['type'],
-      profitRatio: double.parse(json['profit_ratio'].toString()),
-      month: json['month'],
-      year: json['year'],
-      notes: json['notes'],
+  factory AddProductionSettingsModel.fromJson(Map<String, dynamic> json) {
+    return AddProductionSettingsModel(
+      totalProduction: (json['total_production'] as num).toDouble(),
+      type: json['type'] as String,
+      profitRatio: (json['profit_ratio'] as num).toDouble(),
+      month: json['month'] as int,
+      year: json['year'] as int,
+      notes: json['notes'] as String?,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'total_production': totalProduction,
+      'type': type,
+      'profit_ratio': profitRatio,
+      'month': month,
+      'year': year,
+      'notes': notes,
+    };
   }
 }

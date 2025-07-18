@@ -42,7 +42,7 @@ class ProductionSettingCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                if (showActions) _buildActionButtons(context),
+                if (showActions) _buildActionButtons(context, onDelete),
               ],
             ),
             const Divider(height: 16, thickness: 1),
@@ -69,7 +69,7 @@ class ProductionSettingCard extends StatelessWidget {
     );
   }
 
-  Widget _buildActionButtons(BuildContext context) {
+  Widget _buildActionButtons(BuildContext context, void Function()? onPressed) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -80,34 +80,10 @@ class ProductionSettingCard extends StatelessWidget {
         ),
         IconButton(
           icon: const Icon(Icons.delete, color: Colors.red),
-          onPressed: () => _showDeleteConfirmation(context),
+          onPressed: onPressed,
           tooltip: 'Delete',
         ),
       ],
-    );
-  }
-
-  void _showDeleteConfirmation(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Confirm Delete'),
-        content: const Text(
-            'Are you sure you want to delete this production setting?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              onDelete();
-            },
-            child: const Text('Delete', style: TextStyle(color: Colors.red)),
-          ),
-        ],
-      ),
     );
   }
 

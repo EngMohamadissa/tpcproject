@@ -1,19 +1,31 @@
-import 'package:tcp/feutaure/ProductionSettings/data/model/add_production_setting_model.dart';
+abstract class AddProductionSettingState {}
 
-abstract class AddProductionSettingsState {}
+class AddProductionSettingsInitial extends AddProductionSettingState {}
 
-class AddProductionSettingState extends AddProductionSettingsState {}
+class AddProductionSettingsLoading extends AddProductionSettingState {}
 
-class AddProductionSettingsLoading extends AddProductionSettingsState {}
+class AddProductionSettingsSuccess extends AddProductionSettingState {}
 
-class AddProductionSettingsCreated extends AddProductionSettingsState {
-  final ProductionSettings settings;
+class AddProductionSettingsFailure extends AddProductionSettingState {
+  final String errorMessage;
 
-  AddProductionSettingsCreated(this.settings);
+  AddProductionSettingsFailure(this.errorMessage);
 }
 
-class AddProductionSettingsError extends AddProductionSettingsState {
-  final String message;
+class ProductionSettingsUpdating extends AddProductionSettingState {}
 
-  AddProductionSettingsError(this.message);
+class ProductionSettingsUpdated extends AddProductionSettingState {}
+
+class ProductionSettingsUpdateFailed extends AddProductionSettingState {
+  final String errorMessage;
+  ProductionSettingsUpdateFailed(this.errorMessage);
+}
+
+class ProductionSettingsDeleting extends AddProductionSettingState {}
+
+class ProductionSettingsDeleted extends AddProductionSettingState {}
+
+class ProductionSettingsDeleteFailed extends AddProductionSettingState {
+  final String errorMessage;
+  ProductionSettingsDeleteFailed(this.errorMessage);
 }
