@@ -39,7 +39,7 @@ class RawMaterialRepository {
     }
   }
 
-  Future<List<GetRawMaterial>> getRawMaterials() async {
+  Future<List<GetRawMaterialModel>> getRawMaterials() async {
     try {
       final response = await apiService.get(
         'raw-materials/', // افترض أن هذا هو endpoint لجلب القائمة
@@ -51,7 +51,7 @@ class RawMaterialRepository {
           // تحويل كل عنصر JSON إلى كائن RawMaterial
           return rawMaterialsJson
               .map((json) =>
-                  GetRawMaterial.fromJson(json as Map<String, dynamic>))
+                  GetRawMaterialModel.fromJson(json as Map<String, dynamic>))
               .toList();
         } else {
           throw Exception('هيكل استجابة API غير صالح: لا يوجد حقل "data"');
@@ -68,7 +68,7 @@ class RawMaterialRepository {
     }
   }
 
-  Future<List<GetRawMaterial>> searchRawMaterials({
+  Future<List<GetRawMaterialModel>> searchRawMaterials({
     String? name,
     String? description,
     String? status,
@@ -89,6 +89,8 @@ class RawMaterialRepository {
       queryParameters['minimum_stock_alert'] = minStockAlert;
     }
 
+    print('wqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq$queryParameters');
+
     final response = await apiService.get(
       'search/raw-materials',
       queryParameters: queryParameters,
@@ -96,9 +98,50 @@ class RawMaterialRepository {
 
     if (response.statusCode == 200) {
       final List<dynamic> data = response.data['data'];
-      return data.map((json) => GetRawMaterial.fromJson(json)).toList();
+      return data.map((json) => GetRawMaterialModel.fromJson(json)).toList();
     } else {
       throw Exception('Failed to search raw materials: ${response.statusCode}');
+    }
+  }
+
+  Future<String> UpdateRawMaterial(RawMaterial rawMaterial, int id) async {
+    try {
+      final response = await apiService.update(
+        'raw-materials/$id',
+        data: rawMaterial.toJson(),
+      );
+
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        if (response.data is Map && response.data.containsKey('message')) {
+          return response.data['message'].toString();
+        } else {
+          return 'تمت تعديل المادة الخام بنجاح!';
+        }
+      } else {
+        throw Exception('فشل في التعديل: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<String> deleatRawMaterial(int id) async {
+    try {
+      final response = await apiService.delete(
+        'raw-materials/$id',
+      );
+
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        if (response.data is Map && response.data.containsKey('message')) {
+          return response.data['message'].toString();
+        } else {
+          return 'تمت حذف المادة الخام بنجاح!';
+        }
+      } else {
+        throw Exception(' ${response.statusMessage}');
+      }
+    } catch (e) {
+      throw Exception(e.toString());
     }
   }
 }

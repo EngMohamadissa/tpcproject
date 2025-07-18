@@ -7,7 +7,7 @@ class RawMaterialSearchInitial extends RawMaterialSearchState {}
 class RawMaterialSearchLoading extends RawMaterialSearchState {}
 
 class RawMaterialSearchSuccess extends RawMaterialSearchState {
-  final List<GetRawMaterial> results;
+  final List<GetRawMaterialModel> results;
 
   RawMaterialSearchSuccess(this.results);
 }
