@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tcp/core/util/apiservice.dart';
+import 'package:tcp/core/util/func/show.dart';
 
 import 'package:tcp/feutaure/Row_Material/data/get_raw_material_model.dart';
 import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_get/get_raw_material_cubit.dart';
+import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_update/cubit_update_cubit.dart';
 import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_get/get_raw_material_state.dart';
+import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_update/cubit_update_state.dart';
+import 'package:tcp/feutaure/Row_Material/presentation/view/update_raw_material_view.dart';
+import 'package:tcp/feutaure/Row_Material/repo/raw_material_repo.dart';
 
 class RawMaterialsListBody extends StatefulWidget {
   const RawMaterialsListBody({super.key});
@@ -177,7 +183,7 @@ class CardShapeRawmaterial extends StatelessWidget {
     required this.rawMaterial,
   });
 
-  final GetRawMaterial rawMaterial;
+  final GetRawMaterialModel rawMaterial;
 
   @override
   Widget build(BuildContext context) {
@@ -207,17 +213,100 @@ class CardShapeRawmaterial extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
+                // IconButton(
+                //   icon: Icon(Icons.edit, color: Colors.teal.shade600, size: 22),
+                //   onPressed: () async {
+                //     final result = await Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //         builder: (context) => BlocProvider(
+                //           create: (context) => UpdateRawMaterialCubit(
+                //               rawMaterialRepository: RawMaterialRepository(
+                //                   apiService: ApiService())),
+                //           child: UpdateRawMaterialView(
+                //             rowmaterial: rawMaterial,
+                //           ),
+                //         ),
+                //       ),
+                //     );
+
+                //     if (result == true) {
+                //       // أعد تحميل البيانات هنا
+                //       // مثلاً إذا كنت تستخدم Bloc:
+                //       context.read<GetRawMaterialsCubit>().fetchRawMaterials();
+                //     }
+                //   },
+                //   tooltip: 'Edit',
+                // ),
                 IconButton(
                   icon: Icon(Icons.edit, color: Colors.teal.shade600, size: 22),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => UpdateRawMaterialView(
+                                rowmaterial: rawMaterial,
+                              )),
+                    );
+                  },
                   tooltip: 'Edit',
                 ),
+                // IconButton(
+                //   icon:
+                //       Icon(Icons.delete, color: Colors.red.shade600, size: 22),
+                //   onPressed: () {
+                //     context
+                //         .read<UpdateRawMaterialCubit>()
+                //         .deleatRawMaterial(rawMaterial.rawMaterialId);
+                //   },
+                //   tooltip: 'Delete',
+                // ),
+
                 IconButton(
                   icon:
                       Icon(Icons.delete, color: Colors.red.shade600, size: 22),
-                  onPressed: () {},
-                  tooltip: 'Delete',
-                ),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('تأكيد الحذف'),
+                        content: const Text(
+                            'هل أنت متأكد من رغبتك في حذف هذه المادة؟'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('إلغاء'),
+                          ),
+                          BlocConsumer<UpdateRawMaterialCubit,
+                              UpdateRawmaterialState>(
+                            listener: (context, state) {
+                              if (state is DeleatRawMaterialSuccess) {
+                                Navigator.pop(
+                                    context); // إغلاق dialog عند النجاح
+                              }
+                            },
+                            builder: (context, state) {
+                              return TextButton(
+                                onPressed: state is DeleatRawMaterialLoading
+                                    ? null
+                                    : () {
+                                        context
+                                            .read<UpdateRawMaterialCubit>()
+                                            .deleatRawMaterial(
+                                                rawMaterial.rawMaterialId);
+                                      },
+                                child: state is DeleatRawMaterialLoading
+                                    ? const CircularProgressIndicator()
+                                    : const Text('حذف',
+                                        style: TextStyle(color: Colors.red)),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                )
               ],
             ),
             const SizedBox(height: 8),

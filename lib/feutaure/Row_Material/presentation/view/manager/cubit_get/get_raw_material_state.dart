@@ -7,7 +7,7 @@ final class GetRawMaterialsInitial extends GetRawMaterialsState {}
 final class GetRawMaterialsLoading extends GetRawMaterialsState {}
 
 final class GetRawMaterialsSuccess extends GetRawMaterialsState {
-  final List<GetRawMaterial> rawMaterials;
+  final List<GetRawMaterialModel> rawMaterials;
 
   GetRawMaterialsSuccess(this.rawMaterials);
 }

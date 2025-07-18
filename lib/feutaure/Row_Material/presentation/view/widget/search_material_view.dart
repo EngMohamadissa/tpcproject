@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tcp/core/util/const.dart';
+import 'package:tcp/core/util/func/show.dart';
 import 'package:tcp/core/widget/appar_widget,.dart'; // تأكد من المسار الصحيح
 import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_search/search_raw_material_cubit_cubit.dart';
+import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_update/cubit_update_cubit.dart';
+import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_update/cubit_update_state.dart';
 import 'package:tcp/feutaure/Row_Material/presentation/view/widget/fillter_search.dart';
 import 'package:tcp/feutaure/Row_Material/presentation/view/widget/resault_search_material.dart';
 
@@ -73,39 +77,55 @@ class _RawMaterialSearchPageState extends State<RawMaterialSearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(kToolbarHeight),
-        child: AppareWidget(
-          automaticallyImplyLeading: true,
-          title: 'بحث المواد الخام',
+    return BlocListener<UpdateRawMaterialCubit, UpdateRawmaterialState>(
+      listener: (context, state) {
+        if (state is UpdateRawMaterialSuccess ||
+            state is DeleatRawMaterialSuccess) {
+          context.read<RawMaterialSearchCubit>().searchRawMaterials();
+        }
+
+        if (state is DeleatRawMaterialSuccess) {
+          showCustomSnackBar(context, state.message,
+              color: Palette.primarySuccess);
+        } else if (state is DeleatRawMaterialError) {
+          showCustomSnackBar(context, state.message,
+              color: Palette.primaryError);
+        }
+      },
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(kToolbarHeight),
+          child: AppareWidget(
+            automaticallyImplyLeading: true,
+            title: 'بحث المواد الخام',
+          ),
         ),
-      ),
-      body: Column(
-        children: [
-          // شريط الفلاتر القابل للطي
-          RawMaterialFiltersSection(
-            formKey: _formKey,
-            nameController: _nameController,
-            descriptionController: _descriptionController,
-            status: _status,
-            onStatusChanged: (newValue) {
-              setState(() {
-                _status = newValue;
-              });
-            },
-            minPriceController: _minPriceController,
-            maxPriceController: _maxPriceController,
-            minStockAlertController: _minStockAlertController,
-            onSearch: _search,
-            onClearFilters: _clearFilters,
-          ),
-          const Divider(height: 1),
-          // نتائج البحث
-          const Expanded(
-            child: RawMaterialResultsSection(),
-          ),
-        ],
+        body: Column(
+          children: [
+            // شريط الفلاتر القابل للطي
+            RawMaterialFiltersSection(
+              formKey: _formKey,
+              nameController: _nameController,
+              descriptionController: _descriptionController,
+              status: _status,
+              onStatusChanged: (newValue) {
+                setState(() {
+                  _status = newValue;
+                });
+              },
+              minPriceController: _minPriceController,
+              maxPriceController: _maxPriceController,
+              minStockAlertController: _minStockAlertController,
+              onSearch: _search,
+              onClearFilters: _clearFilters,
+            ),
+            const Divider(height: 1),
+            // نتائج البحث
+            const Expanded(
+              child: RawMaterialResultsSection(),
+            ),
+          ],
+        ),
       ),
     );
   }

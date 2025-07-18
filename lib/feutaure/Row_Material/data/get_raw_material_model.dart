@@ -1,5 +1,5 @@
 // lib/models/raw_material.dart
-class GetRawMaterial {
+class GetRawMaterialModel {
   final int rawMaterialId; // هنا يجب أن يكون غير قابل للقيمة الفارغة
   final String name;
   final String description;
@@ -9,7 +9,7 @@ class GetRawMaterial {
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  GetRawMaterial({
+  GetRawMaterialModel({
     required this.rawMaterialId,
     required this.name,
     required this.description,
@@ -21,8 +21,8 @@ class GetRawMaterial {
   });
 
   // Factory constructor to create a RawMaterial from a JSON map
-  factory GetRawMaterial.fromJson(Map<String, dynamic> json) {
-    return GetRawMaterial(
+  factory GetRawMaterialModel.fromJson(Map<String, dynamic> json) {
+    return GetRawMaterialModel(
       rawMaterialId: json['raw_material_id'] as int,
       name: json['name'] as String,
       description: json['description'] as String,

@@ -28,7 +28,7 @@ import 'package:tcp/feutaure/Row_Material/repo/raw_material_repo.dart'; // تأ�
 
 class GetRawMaterialsCubit extends Cubit<GetRawMaterialsState> {
   final RawMaterialRepository rawMaterialRepository;
-  List<GetRawMaterial> _allRawMaterials = []; // تخزين جميع المواد الخام
+  List<GetRawMaterialModel> _allRawMaterials = []; // تخزين جميع المواد الخام
 
   GetRawMaterialsCubit({required this.rawMaterialRepository})
       : super(GetRawMaterialsInitial());
@@ -52,7 +52,7 @@ class GetRawMaterialsCubit extends Cubit<GetRawMaterialsState> {
   void filterRawMaterials(String status) {
     if (_allRawMaterials.isEmpty) return;
 
-    List<GetRawMaterial> filteredList;
+    List<GetRawMaterialModel> filteredList;
     if (status == 'All') {
       filteredList = _allRawMaterials;
     } else {
