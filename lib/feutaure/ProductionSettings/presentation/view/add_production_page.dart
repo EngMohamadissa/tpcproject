@@ -250,7 +250,10 @@ class _AddProductionSettingsScreenState
 
                     // Submit Button
                     if (state is AddProductionSettingsLoading)
-                      const Center(child: CircularProgressIndicator())
+                      const Center(
+                          child: CircularProgressIndicator(
+                        strokeWidth: 2.0,
+                      ))
                     else
                       CustomButton(
                         onTap: () {

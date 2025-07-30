@@ -118,7 +118,10 @@ class EditPageBody extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is ProductionSettingsUpdating) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+              child: CircularProgressIndicator(
+            strokeWidth: 2.0,
+          ));
         } else {
           // عرض الفورم في جميع الحالات الأخرى (Initial, Success, Failure)
           return SingleChildScrollView(

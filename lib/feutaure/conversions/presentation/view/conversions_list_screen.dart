@@ -55,7 +55,10 @@ class _ConversionsListScreenState extends State<ConversionsListScreen> {
           },
           builder: (context, state) {
             if (state is ConversionsLoading || state is ConversionsInitial) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(
+                  child: CircularProgressIndicator(
+                strokeWidth: 2.0,
+              ));
             } else if (state is ConversionsLoaded) {
               if (state.conversions.isEmpty) {
                 return const EmptyWigetView(

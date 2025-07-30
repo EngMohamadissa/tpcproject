@@ -303,7 +303,9 @@ class _BathcRawMaterialBodyState extends State<BathcRawMaterialBody> {
                                                       },
                                                 child: state
                                                         is DeleatBatchRawMaterialLoading
-                                                    ? const CircularProgressIndicator()
+                                                    ? const CircularProgressIndicator(
+                                                        strokeWidth: 2.0,
+                                                      )
                                                     : const Text('حذف',
                                                         style: TextStyle(
                                                             color: Colors.red)),

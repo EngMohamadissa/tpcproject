@@ -141,7 +141,10 @@ class _ProductionSettingsOverviewScreenState
                 },
                 builder: (context, state) {
                   if (state is GetProductionSettingLoading) {
-                    return const Center(child: CircularProgressIndicator());
+                    return const Center(
+                        child: CircularProgressIndicator(
+                      strokeWidth: 2.0,
+                    ));
                   } else if (state is GetProductionSettingLoaded) {
                     if (state.settings.isEmpty) {
                       return EmptyWigetView(

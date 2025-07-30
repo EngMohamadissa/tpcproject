@@ -82,7 +82,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           },
           builder: (context, state) {
             if (state is UserProfileLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(
+                  child: CircularProgressIndicator(
+                strokeWidth: 2.0,
+              ));
             } else if (state is UserProfileLoaded) {
               final user = state.user;
               return SingleChildScrollView(

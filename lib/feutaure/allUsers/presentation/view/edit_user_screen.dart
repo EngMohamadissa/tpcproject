@@ -91,7 +91,10 @@ class _EditUserScreenState extends State<EditUserScreen> {
           builder: (context, state) {
             // If fetching user data (if you enabled fetchUserById)
             if (state is UserUpdating && state.userId == widget.userId) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(
+                  child: CircularProgressIndicator(
+                strokeWidth: 2.0,
+              ));
             }
             // Show the form after loading data or in initial state
             return SingleChildScrollView(

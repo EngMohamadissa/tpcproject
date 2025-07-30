@@ -296,7 +296,9 @@ class CardShapeRawmaterial extends StatelessWidget {
                                                 rawMaterial.rawMaterialId);
                                       },
                                 child: state is DeleatRawMaterialLoading
-                                    ? const CircularProgressIndicator()
+                                    ? const CircularProgressIndicator(
+                                        strokeWidth: 2.0,
+                                      )
                                     : const Text('حذف',
                                         style: TextStyle(color: Colors.red)),
                               );

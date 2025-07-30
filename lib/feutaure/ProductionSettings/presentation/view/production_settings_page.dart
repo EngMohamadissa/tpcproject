@@ -77,7 +77,10 @@ class ProductionSettingsPage extends StatelessWidget {
             },
             builder: (context, state) {
               if (state is ProductionSettingsLoading) {
-                return const Center(child: CircularProgressIndicator());
+                return const Center(
+                    child: CircularProgressIndicator(
+                  strokeWidth: 2.0,
+                ));
               } else if (state is ProductionSettingsLoaded) {
                 if (state.settings.isEmpty) {
                   return const Center(

@@ -85,7 +85,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           },
           builder: (context, state) {
             if (state is UserUpdating && state.userId == widget.userId) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(
+                  child: CircularProgressIndicator(
+                strokeWidth: 2.0,
+              ));
             }
             return SingleChildScrollView(
               padding: const EdgeInsets.all(20.0),

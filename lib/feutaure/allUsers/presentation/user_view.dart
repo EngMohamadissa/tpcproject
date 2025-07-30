@@ -85,7 +85,10 @@ class _UsersListScreenState extends State<UsersListScreen> {
             if (state is UsersInitial ||
                 state is UsersLoading ||
                 state is UserActivationChanging) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(
+                  child: CircularProgressIndicator(
+                strokeWidth: 2.0,
+              ));
             } else if (state is UsersLoaded) {
               if (state.users.isEmpty) {
                 return const EmptyWigetView(

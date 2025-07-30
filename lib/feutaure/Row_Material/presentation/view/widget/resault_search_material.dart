@@ -13,7 +13,10 @@ class RawMaterialResultsSection extends StatelessWidget {
     return BlocBuilder<RawMaterialSearchCubit, RawMaterialSearchState>(
       builder: (context, state) {
         if (state is RawMaterialSearchLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+              child: CircularProgressIndicator(
+            strokeWidth: 2.0,
+          ));
         } else if (state is RawMaterialSearchError) {
           return Center(
             child: Column(
@@ -144,7 +147,8 @@ class RawMaterialResultsSection extends StatelessWidget {
 //         }
 
 //         if (state is RawMaterialSearchLoading) {
-//           return const Center(child: CircularProgressIndicator());
+//           return const Center(child: CircularProgressIndicator(                  strokeWidth: 2.0,
+
 //         } else if (state is RawMaterialSearchError) {
 //           return buildEmptyState(
 //             state.message,

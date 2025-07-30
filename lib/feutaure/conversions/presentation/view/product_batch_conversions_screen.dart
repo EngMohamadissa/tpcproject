@@ -31,7 +31,10 @@ class ProductBatchConversionsScreen extends StatelessWidget {
         body: BlocBuilder<ConversionsCubit, ConversionsState>(
           builder: (context, state) {
             if (state is ConversionBatchLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(
+                  child: CircularProgressIndicator(
+                strokeWidth: 2.0,
+              ));
             } else if (state is ConversionBatchLoaded) {
               if (state.conversions.isEmpty) {
                 return EmptyWigetView(

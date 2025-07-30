@@ -1,0 +1,49 @@
+import 'package:dio/dio.dart';
+import 'package:tcp/core/util/apiservice.dart';
+import 'package:tcp/feutaure/profit-loss-report/data/model/sub_profit-loss-report_model.dart';
+import '../../../../core/util/error/error_handling.dart';
+
+class DamagedMaterialRepositoryImp {
+  final ApiService _apiService;
+
+  DamagedMaterialRepositoryImp(this._apiService);
+
+  Future<List<DamagedMaterialProfitLossReportModel>>
+      getDamagedMaterials() async {
+    try {
+      final response = await _apiService.get('damaged-materials');
+
+      if (response.data != null && response.data['data'] is List) {
+        return (response.data['data'] as List)
+            .map((item) => DamagedMaterialProfitLossReportModel.fromJson(item))
+            .toList();
+      } else {
+        return [];
+      }
+    } on DioException catch (e) {
+      throw ErrorHandler.handleDioError(e);
+    } catch (e) {
+      throw Exception('فشل في جلب المواد التالفة: $e');
+    }
+  }
+
+  Future<void> deleteDamagedMaterial(int damagedMaterialId) async {
+    try {
+      await _apiService.delete('damaged-materials/$damagedMaterialId');
+      // API returns 200 status with 'message' on success, no 'data'
+    } on DioException catch (e) {
+      // Handle specific 404 messages from your API
+      if (e.response?.statusCode == 404) {
+        if (e.response?.data != null && e.response?.data['message'] != null) {
+          // Re-throw with the specific message for UI to display
+          throw Exception(e.response?.data['message']);
+        }
+      }
+      // For other DioErrors, use the general error handler
+      throw ErrorHandler.handleDioError(e);
+    } catch (e) {
+      // Catch any other unexpected errors
+      throw Exception('فشل في حذف المادة التالفة رقم $damagedMaterialId: $e');
+    }
+  }
+}
