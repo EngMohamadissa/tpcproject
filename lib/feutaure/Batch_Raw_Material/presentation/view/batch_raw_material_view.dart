@@ -546,13 +546,6 @@ class _BathcRawMaterialBodyState extends State<BathcRawMaterialBody> {
             },
           ),
         ),
-        // Floating action button to add a new batch
-        floatingActionButton: buildFloatactionBouttonW(context, onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddBatchRawMaterialView()),
-          );
-        }),
       ),
     );
   }

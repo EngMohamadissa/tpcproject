@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tcp/core/util/apiservice.dart';
-import 'package:tcp/core/util/func/show.dart';
-
 import 'package:tcp/feutaure/Row_Material/data/get_raw_material_model.dart';
 import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_get/get_raw_material_cubit.dart';
-import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_update/cubit_update_cubit.dart';
+import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_update/raw_update_cubit.dart';
 import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_get/get_raw_material_state.dart';
-import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_update/cubit_update_state.dart';
+import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_update/raw_update_state.dart';
 import 'package:tcp/feutaure/Row_Material/presentation/view/update_raw_material_view.dart';
-import 'package:tcp/feutaure/Row_Material/repo/raw_material_repo.dart';
+import 'package:tcp/feutaure/Row_Material/presentation/view/widget/card_raw_material.dart';
 
 class RawMaterialsListBody extends StatefulWidget {
   const RawMaterialsListBody({super.key});
@@ -296,9 +293,7 @@ class CardShapeRawmaterial extends StatelessWidget {
                                                 rawMaterial.rawMaterialId);
                                       },
                                 child: state is DeleatRawMaterialLoading
-                                    ? const CircularProgressIndicator(
-                                        strokeWidth: 2.0,
-                                      )
+                                    ? const CircularProgressIndicator()
                                     : const Text('حذف',
                                         style: TextStyle(color: Colors.red)),
                               );

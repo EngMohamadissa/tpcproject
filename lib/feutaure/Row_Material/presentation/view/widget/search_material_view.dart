@@ -4,8 +4,8 @@ import 'package:tcp/core/util/const.dart';
 import 'package:tcp/core/util/func/show.dart';
 import 'package:tcp/core/widget/appar_widget,.dart'; // تأكد من المسار الصحيح
 import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_search/search_raw_material_cubit_cubit.dart';
-import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_update/cubit_update_cubit.dart';
-import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_update/cubit_update_state.dart';
+import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_update/raw_update_cubit.dart';
+import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_update/raw_update_state.dart';
 import 'package:tcp/feutaure/Row_Material/presentation/view/widget/fillter_search.dart';
 import 'package:tcp/feutaure/Row_Material/presentation/view/widget/resault_search_material.dart';
 

@@ -7,8 +7,8 @@ import 'package:tcp/feutaure/Batch_Raw_Material/presentation/view/manager/cubit_
 
 // تحويل Widget إلى StatefulWidget لإدارة حالة حقول الإدخال ومفتاح النموذج
 class BodyAddBatchRawMaterial extends StatefulWidget {
-  const BodyAddBatchRawMaterial({super.key});
-
+  const BodyAddBatchRawMaterial({super.key, this.rawid});
+  final rawid;
   @override
   State<BodyAddBatchRawMaterial> createState() =>
       _BodyAddBatchRawMaterialState();
@@ -53,8 +53,7 @@ class _BodyAddBatchRawMaterialState extends State<BodyAddBatchRawMaterial> {
 
       // إنشاء خريطة بالبيانات لإرسالها إلى الـ Cubit
       final Map<String, dynamic> batchData = {
-        "user_id": 1,
-        'raw_material_id': 2,
+        'raw_material_id': widget.rawid,
         'quantity_in': quantityIn,
         'real_cost': realCost,
         'payment_method': paymentMethod,

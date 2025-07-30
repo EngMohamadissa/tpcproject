@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tcp/core/widget/custom_field.dart';
-import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_update/cubit_update_cubit.dart';
-import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_update/cubit_update_state.dart';
+import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_update/raw_update_cubit.dart';
+import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_update/raw_update_state.dart';
 
 class UpdateRawmaterialBody extends StatelessWidget {
   const UpdateRawmaterialBody({

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tcp/core/util/assetsImage.dart';
 import 'package:tcp/feutaure/Row_Material/presentation/view/raw_material_view.dart';
+import 'package:tcp/feutaure/home/presentation/view/navigator_product.dart';
+import 'package:tcp/feutaure/home/presentation/view/navigator_raw_material.dart';
 import 'package:tcp/feutaure/home/presentation/view/widget/build_properties_container.dart';
 import 'package:tcp/feutaure/home/presentation/view/widget/card_row_materials.dart';
 import 'package:tcp/feutaure/home/presentation/view/widget/slider.dart';
@@ -35,7 +37,7 @@ class HomeView extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => RawMaterialsListPage()));
+                              builder: (context) => NavigatorRawMaterial()));
                     },
                     tite: 'Rwo Materials',
                     iconData: Icons.check_circle,
@@ -47,6 +49,12 @@ class HomeView extends StatelessWidget {
                   const SizedBox(width: 20),
                   Expanded(
                       child: BirthdayCard(
+                    ontap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NavigatorProduct()));
+                    },
                     tite: 'Products',
                     iconData: Icons.cancel,
                     listColor: [
