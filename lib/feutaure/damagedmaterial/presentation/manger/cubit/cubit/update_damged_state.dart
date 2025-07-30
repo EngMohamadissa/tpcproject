@@ -2,6 +2,8 @@ import 'package:tcp/feutaure/profit-loss-report/data/model/sub_profit-loss-repor
 
 abstract class UpdateDamgedState {}
 
+class UpdateDamgedInitial extends UpdateDamgedState {}
+
 class DamagedMaterialUpdating extends UpdateDamgedState {}
 
 class DamagedMaterialUpdateSuccess extends UpdateDamgedState {

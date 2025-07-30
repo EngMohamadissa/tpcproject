@@ -26,14 +26,12 @@ class _CreateDamagedMaterialScreenState
       TextEditingController();
   final TextEditingController _productBatchIdController =
       TextEditingController();
-  final TextEditingController _notesController = TextEditingController();
 
   @override
   void dispose() {
     _quantityController.dispose();
     _rawMaterialBatchIdController.dispose();
     _productBatchIdController.dispose();
-    _notesController.dispose();
     super.dispose();
   }
 
@@ -42,7 +40,7 @@ class _CreateDamagedMaterialScreenState
       _formKey.currentState!.save();
 
       context.read<CreateDamagedMaterialCubit>().createDamagedMaterial(
-            rawMaterialBatchId: 3,
+            rawMaterialBatchId: widget.rawMaterialBatchIdOrProductBatchId,
             // productBatchId: productBatchId,
             quantity: double.parse(_quantityController.text),
           );

@@ -46,4 +46,74 @@ class DamagedMaterialRepositoryImp {
       throw Exception('فشل في حذف المادة التالفة رقم $damagedMaterialId: $e');
     }
   }
+
+  Future<DamagedMaterialProfitLossReportModel> createDamagedMaterial({
+    int?
+        rawMaterialBatchId, // يمكن أن يكون null إذا كانت product_batch_id موجودة
+    int?
+        productBatchId, // يمكن أن يكون null إذا كانت raw_material_batch_id موجودة
+    required double quantity,
+  }) async {
+    final Map<String, dynamic> data = {
+      'quantity': quantity,
+    };
+
+    if (rawMaterialBatchId != null) {
+      data['raw_material_batch_id'] = rawMaterialBatchId;
+    }
+    if (productBatchId != null) {
+      data['product_batch_id'] = productBatchId;
+    }
+
+    try {
+      final response = await _apiService.post('damaged-materials', data);
+
+      if (response.data != null && response.data['data'] != null) {
+        return DamagedMaterialProfitLossReportModel.fromJson(
+            response.data['data']);
+      } else {
+        throw Exception(
+            'الاستجابة لا تحتوي على بيانات للمادة التالفة التي تم إنشاؤها.');
+      }
+    } on DioException catch (e) {
+      throw ErrorHandler.handleDioError(e);
+    } catch (e) {
+      throw Exception('فشل في إنشاء مادة تالفة جديدة: $e');
+    }
+  }
+
+  Future<DamagedMaterialProfitLossReportModel> updateDamagedMaterial(
+    int damagedMaterialId, {
+    required double quantity,
+    String? notes, // Allow notes to be updated if needed
+    // You could also add options to update product_batch_id or raw_material_batch_id
+    // but the API usually handles this by type directly, or they're immutable after creation.
+    // Based on your specific request, only quantity is mandatory.
+  }) async {
+    final Map<String, dynamic> data = {
+      'quantity': quantity,
+    };
+
+    if (notes != null) {
+      // Only add notes if provided (allow clearing by passing empty string)
+      data['notes'] = notes;
+    }
+
+    try {
+      final response = await _apiService
+          .update('damaged-materials/$damagedMaterialId', data: data);
+
+      if (response.data != null && response.data['data'] != null) {
+        return DamagedMaterialProfitLossReportModel.fromJson(
+            response.data['data']);
+      } else {
+        throw Exception(
+            'الاستجابة لا تحتوي على بيانات للمادة التالفة المحدثة.');
+      }
+    } on DioException catch (e) {
+      throw ErrorHandler.handleDioError(e);
+    } catch (e) {
+      throw Exception('فشل في تحديث المادة التالفة رقم $damagedMaterialId: $e');
+    }
+  }
 }

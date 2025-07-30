@@ -1,10 +1,20 @@
-part of 'create_damaged_material_cubit.dart';
+import 'package:tcp/feutaure/profit-loss-report/data/model/sub_profit-loss-report_model.dart';
 
-sealed class CreateDamagedMaterialState extends Equatable {
-  const CreateDamagedMaterialState();
+abstract class CreateDamagedMaterialState {}
 
-  @override
-  List<Object> get props => [];
+class CreateDamagedMaterialInitial extends CreateDamagedMaterialState {}
+
+class CreateDamagedMaterialLoading extends CreateDamagedMaterialState {}
+
+class CreateDamagedMaterialSuccess extends CreateDamagedMaterialState {
+  final DamagedMaterialProfitLossReportModel newMaterial;
+  final String message;
+
+  CreateDamagedMaterialSuccess(this.newMaterial, this.message);
 }
 
-final class CreateDamagedMaterialInitial extends CreateDamagedMaterialState {}
+class CreateDamagedMaterialError extends CreateDamagedMaterialState {
+  final String message;
+
+  CreateDamagedMaterialError(this.message);
+}
