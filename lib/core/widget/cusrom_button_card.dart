@@ -11,6 +11,7 @@ class ButtonINCard extends StatelessWidget {
   final void Function() onPressed;
   final Widget icon;
   final Widget label;
+  final Color? backgroundColor = Palette.primary;
 
   @override
   Widget build(BuildContext context) {

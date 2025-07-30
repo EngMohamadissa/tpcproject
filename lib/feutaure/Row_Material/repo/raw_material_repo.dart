@@ -104,7 +104,7 @@ class RawMaterialRepository {
     }
   }
 
-  Future<String> UpdateRawMaterial(RawMaterial rawMaterial, int id) async {
+  Future<String> updateRawMaterial(RawMaterial rawMaterial, int id) async {
     try {
       final response = await apiService.update(
         'raw-materials/$id',

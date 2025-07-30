@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_search/search_raw_material_cubit_cubit.dart';
 import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_search/search_raw_material_cubit_state.dart';
+import 'package:tcp/feutaure/Row_Material/presentation/view/widget/card_raw_material.dart';
 import 'package:tcp/feutaure/Row_Material/presentation/view/widget/raw_materials_list_body.dart';
 
 class RawMaterialResultsSection extends StatelessWidget {

@@ -2,10 +2,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:tcp/core/util/error/error_handling.dart';
-import 'package:tcp/feutaure/ProductionSettings/repo/production_settings_repo.dart';
 
 import 'package:tcp/feutaure/Row_Material/data/add_raw_material_model.dart';
-import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_update/cubit_update_state.dart';
+import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_update/raw_update_state.dart';
 import 'package:tcp/feutaure/Row_Material/repo/raw_material_repo.dart';
 
 class UpdateRawMaterialCubit extends Cubit<UpdateRawmaterialState> {
@@ -18,7 +17,7 @@ class UpdateRawMaterialCubit extends Cubit<UpdateRawmaterialState> {
     emit(UpdateRawMaterialLoading());
     try {
       final newRawMaterial =
-          await rawMaterialRepository.UpdateRawMaterial(rawMaterial, id);
+          await rawMaterialRepository.updateRawMaterial(rawMaterial, id);
 
       print('mohamamasdasdasd$newRawMaterial');
       emit(UpdateRawMaterialSuccess(newRawMaterial));
