@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 Future<void> setupFirebaseNotifications() async {
-  // 1. تهيئة Local Notifications
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
@@ -16,7 +15,6 @@ Future<void> setupFirebaseNotifications() async {
 
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
-  // 2. طلب الأذونات (لأندرويد 13+)
   await FirebaseMessaging.instance.requestPermission(
     alert: true,
     badge: true,
@@ -27,9 +25,8 @@ Future<void> setupFirebaseNotifications() async {
     _showNotification(flutterLocalNotificationsPlugin, message);
   });
 
-  // 4. الحصول على توكن الجهاز
   String? token = await FirebaseMessaging.instance.getToken();
-  debugPrint("🔥FCM Token: $token"); // احفظ هذا التوكن لإرسال إشعارات مستهدفة
+  debugPrint("🔥FCM Token: $token");
 }
 
 void _showNotification(
