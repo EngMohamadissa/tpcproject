@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tcp/constants/my_app_colors.dart';
 import 'package:tcp/core/util/assetsImage.dart';
-
 import 'package:tcp/core/util/styles.dart';
 import 'package:tcp/screens/register_screen.dart';
-import 'package:tcp/screens/sign_in_screen.dart';
 
 class SplashSreen extends StatefulWidget {
   const SplashSreen({super.key});
@@ -21,7 +18,7 @@ class _SplashSreenState extends State<SplashSreen> {
     super.initState();
 
     Future.delayed(const Duration(seconds: 4), () {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => RegisterScreen()),
       );
