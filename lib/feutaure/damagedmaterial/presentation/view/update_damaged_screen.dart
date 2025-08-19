@@ -6,6 +6,7 @@ import 'package:tcp/core/util/func/show.dart';
 import 'package:tcp/core/widget/custom_field.dart';
 import 'package:tcp/feutaure/damagedmaterial/presentation/manger/cubit/cubit/create_damaged_material_cubit.dart';
 import 'package:tcp/feutaure/damagedmaterial/presentation/manger/cubit/cubit/create_damaged_material_state.dart';
+import 'package:tcp/feutaure/damagedmaterial/presentation/manger/cubit/cubit/update_damged_cubit.dart';
 import 'package:tcp/feutaure/damagedmaterial/repo/damaged_material_repository_imp.dart';
 
 class UpdateDamagedMaterialScreen extends StatefulWidget {
@@ -37,8 +38,8 @@ class _UpdateDamagedMaterialScreenState
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      context.read<CreateDamagedMaterialCubit>().createDamagedMaterial(
-            rawMaterialBatchId: widget.rawMaterialBatchIdOrProductBatchId,
+      context.read<UpdateDamgedCubit>().updateDamagedMaterial(
+            1,
             // productBatchId: productBatchId,
             quantity: double.parse(_quantityController.text),
           );

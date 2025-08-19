@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:tcp/core/util/apiservice.dart';
+import 'package:tcp/core/widget/appar_widget,.dart';
 import 'package:tcp/core/widget/empty_widget_view.dart';
 import 'package:tcp/core/widget/error_widget_view.dart';
 import 'package:tcp/feutaure/ProductSaleReports/presentation/manger/cubit/cubit/product_summary_report_cubit.dart';
@@ -19,16 +20,12 @@ class ProductSummaryReportScreen extends StatelessWidget {
             ApiService()), // توفير ApiService و Repository
       )..fetchProductSummaryReports(), // جلب البيانات عند تحميل الشاشة
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'ملخص أداء المنتجات',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(kToolbarHeight),
+          child: AppareWidget(
+            automaticallyImplyLeading: true,
+            title: 'ملخص أداء المنتجات',
           ),
-          backgroundColor: Colors.indigo, // لون مميز لهذه الميزة
-          elevation: 0,
         ),
         body: BlocBuilder<ProductSummaryReportCubit, ProductSummaryReportState>(
           builder: (context, state) {

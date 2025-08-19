@@ -13,6 +13,7 @@ import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_search
 import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_update/raw_update_cubit.dart';
 import 'package:tcp/feutaure/Row_Material/repo/raw_material_repo.dart';
 import 'package:tcp/screens/spash_view.dart';
+import 'package:tcp/testrawmaterialproduct.dart';
 import 'package:tcp/view_models/auth_cubit/auth_cubit.dart';
 
 void main() async {
@@ -42,6 +43,13 @@ class MyApp extends StatelessWidget {
         //     ),
         //   ),
         // ),
+
+        BlocProvider(
+          create: (context) => ProductMaterialsCubit(
+            ProductMaterialsRepo(
+                ApiService()), // Provide ApiService to the repo
+          ),
+        ),
         BlocProvider(
           create: (context) => UpdateProductCubit(
             productRepository:

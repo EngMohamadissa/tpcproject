@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tcp/core/widget/appar_widget,.dart';
 import 'package:tcp/feutaure/ProductSaleReports/presentation/view/monthly_profit_screen.dart';
+import 'package:tcp/feutaure/ProductSaleReports/presentation/view/product_summary_report_screen.dart';
 import 'package:tcp/feutaure/ProductSaleReports/presentation/view/widget/build_conroller_widget.dart';
 
 class ReportsControlScreen extends StatelessWidget {
@@ -45,10 +46,11 @@ class ReportsControlScreen extends StatelessWidget {
               icon: Icons.calendar_month,
               color: Colors.green[700]!,
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => NewScreen()),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ProductSummaryReportScreen()),
+                );
               },
             ),
           ],

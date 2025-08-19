@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tcp/core/widget/appar_widget,.dart';
 import 'package:tcp/feutaure/Product/presentation/view/all_product_view.dart';
 import 'package:tcp/feutaure/ProductSaleReports/presentation/view/widget/build_conroller_widget.dart';
+import 'package:tcp/testrawmaterialproduct.dart';
 
 class NavigatorProduct extends StatelessWidget {
   const NavigatorProduct({super.key});
@@ -32,6 +33,21 @@ class NavigatorProduct extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => ProductListView()),
+                );
+              },
+            ),
+            const SizedBox(height: 20),
+
+            buildReportCard(
+              context,
+              title: ' ProductMaterials',
+              icon: Icons.calendar_today,
+              color: const Color.fromARGB(255, 192, 210, 25),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ProductMaterialsListView()),
                 );
               },
             ),
