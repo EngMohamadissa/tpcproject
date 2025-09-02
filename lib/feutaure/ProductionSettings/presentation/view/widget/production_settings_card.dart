@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tcp/feutaure/ProductionSettings/data/model/entities/production_setting.dart';
-import 'package:tcp/feutaure/ProductionSettings/presentation/view/widget/buildInfoRow.dart';
+import 'package:tcp/feutaure/ProductionSettings/presentation/view/widget/buildInfo_row.dart';
 
 class ProductionSettingsByMonthCard extends StatelessWidget {
   const ProductionSettingsByMonthCard({
@@ -36,7 +36,7 @@ class ProductionSettingsByMonthCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'ID: ${setting.productionSettingsId ?? 'N/A'}',
+                  'ID: ${setting.productionSettingsId}',
                   style: const TextStyle(fontSize: 12, color: Colors.grey),
                 ),
               ],

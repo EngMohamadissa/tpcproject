@@ -41,8 +41,7 @@ class _EditProductionSettingsScreenState
     _profitRatioController = TextEditingController(
         text: widget.productionSetting.profitRatio.toString());
     _notesController = TextEditingController(
-        text: widget.productionSetting.notes ??
-            ''); // تأكد من التعامل مع القيمة null
+        text: widget.productionSetting.notes); // تأكد من التعامل مع القيمة null
   }
 
   @override

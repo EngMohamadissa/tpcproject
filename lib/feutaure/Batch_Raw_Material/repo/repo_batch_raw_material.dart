@@ -65,7 +65,8 @@ class RawMaterialBatchRepository {
           error: "فشل جلب دفعات المواد الخام: ${response.statusCode}",
         );
       }
-    } on DioException catch (e) {
+    } on DioException {
+      // إعادة رمي DioException الأصلي للسماح للـ Cubit بالتقاطه ومعالجته بواسطة ErrorHandler
       rethrow;
     } catch (e) {
       throw Exception(
@@ -90,8 +91,7 @@ class RawMaterialBatchRepository {
         throw Exception(
             'Failed to update raw material batch: ${response.statusCode}');
       }
-    } on DioException catch (e) {
-      // إعادة رمي DioException الأصلي للسماح للـ Cubit بالتقاطه ومعالجته بواسطة ErrorHandler
+    } on DioException {
       rethrow;
     } catch (e) {
       // التقاط أي استثناءات أخرى غير متوقعة (ليست DioException)

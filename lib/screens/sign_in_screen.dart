@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tcp/constants/my_app_colors.dart';
+
 import 'package:tcp/feutaure/home/presentation/view/home_view.dart';
 import 'package:tcp/screens/register_screen.dart';
 import 'package:tcp/view_models/auth_cubit/auth_cubit.dart';
@@ -245,8 +246,8 @@ class SignInScreen extends StatelessWidget {
                                 width: 280.w,
                                 onTap: () {},
                                 borderRadius: 24.r,
-                                bgColor:
-                                    MyAppColors.kBackground.withOpacity(0.3),
+                                bgColor: MyAppColors.kBackground
+                                    .withValues(alpha: 0.3),
                                 text: 'Continue with Google',
                                 icons: "assets/images/googleSymbol.png"),
                           ],

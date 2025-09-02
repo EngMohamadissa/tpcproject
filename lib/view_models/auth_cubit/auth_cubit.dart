@@ -57,7 +57,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> register({required String user_role}) async {
+  Future<void> register({required String userRole}) async {
     emit(Loading());
     try {
       log(email.text);
@@ -73,7 +73,7 @@ class AuthCubit extends Cubit<AuthState> {
           "email": email.text,
           "password": password.text,
           "phone": phone.text,
-          "user_role": user_role,
+          "user_role": userRole,
         },
         headers: {"Accept": "application/json"},
       );
