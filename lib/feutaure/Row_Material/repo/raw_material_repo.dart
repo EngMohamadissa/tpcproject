@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:tcp/core/util/apiservice.dart';
 import 'package:tcp/core/util/error/error_handling.dart';
@@ -89,7 +91,7 @@ class RawMaterialRepository {
       queryParameters['minimum_stock_alert'] = minStockAlert;
     }
 
-    print('wqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq$queryParameters');
+    log('wqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq$queryParameters');
 
     final response = await apiService.get(
       'search/raw-materials',

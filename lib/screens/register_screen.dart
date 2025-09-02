@@ -233,7 +233,7 @@ class RegisterScreen extends StatelessWidget {
                                   if (registerKey.currentState!.validate()) {
                                     registerKey.currentState!.save();
                                     if (userRole != null) {
-                                      c.register(user_role: userRole!);
+                                      c.register(userRole: userRole!);
                                     } else {
                                       print("Please select a role.");
                                     }

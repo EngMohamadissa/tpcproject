@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tcp/core/util/error/error_handling.dart';
 import 'package:tcp/feutaure/ProductionSettings/data/model/add_production_setting_model.dart';
 import 'package:tcp/feutaure/ProductionSettings/presentation/manger/cubit/cubit/cubit/add_production_setting_state.dart';
-import 'package:tcp/feutaure/ProductionSettings/presentation/manger/cubit/get_product_setting_state.dart';
 import 'package:tcp/feutaure/ProductionSettings/repo/production_settings_repo.dart';
 
 class AddProductionSettingsCubit extends Cubit<AddProductionSettingState> {

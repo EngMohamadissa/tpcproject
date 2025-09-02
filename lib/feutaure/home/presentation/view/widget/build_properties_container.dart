@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tcp/core/util/styles.dart';
 import 'package:tcp/feutaure/ProductSaleReports/presentation/view/ReportsControlScreen.dart';
-import 'package:tcp/feutaure/ProductionSettings/presentation/view/get_production_setting_by_month_page.dart';
 import 'package:tcp/feutaure/ProductionSettings/presentation/view/product_setting_controller_view.dart';
 import 'package:tcp/feutaure/allUsers/presentation/user_view.dart';
 import 'package:tcp/feutaure/conversions/presentation/view/conversions_list_screen.dart';
 import 'package:tcp/feutaure/damagedmaterial/presentation/view/damaged_materials_screen.dart';
 import 'package:tcp/feutaure/home/presentation/view/widget/build_property_item.dart';
+import 'package:tcp/feutaure/notification/presentation/view/notifications_page.dart';
 import 'package:tcp/feutaure/profit-loss-report/presentation/view/profit_loss_view.dart';
+import 'package:tcp/feutaure/simi_products/presentation/view/semi_finished_products_page.dart';
 
 Widget buildPropertiesContainer(BuildContext context) {
   return Column(
@@ -71,9 +72,20 @@ Widget buildPropertiesContainer(BuildContext context) {
               MaterialPageRoute(builder: (context) => DamagedMaterialsScreen()),
             );
           }),
-          buildPropertyItem(Icons.trending_up, 'Rate', '5 kg/day', () {}),
+          buildPropertyItem(Icons.trending_up, 'Simi', 'Products', () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => SemiFinishedProductsPage()),
+            );
+          }),
           buildPropertyItem(
-              Icons.device_thermostat, 'Temperature', '25°C', () {}),
+              Icons.notifications_active_outlined, 'Notification', 'TPC', () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => NotificationsPage()),
+            );
+          }),
         ],
       ),
     ],

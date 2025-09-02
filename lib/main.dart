@@ -1,26 +1,28 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tcp/core/util/apiservice.dart';
+import 'package:tcp/core/util/injection_container.dart' as di;
 import 'package:tcp/feutaure/Batch_Raw_Material/presentation/view/manager/cubit_add/add_batch_raw_cubit.dart';
 import 'package:tcp/feutaure/Batch_Raw_Material/presentation/view/manager/cubit_update/updat_batch_raw_cubit.dart';
 import 'package:tcp/feutaure/Batch_Raw_Material/repo/repo_batch_raw_material.dart';
 import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_search/search_raw_material_cubit_cubit.dart';
 import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_update/raw_update_cubit.dart';
 import 'package:tcp/feutaure/Row_Material/repo/raw_material_repo.dart';
-import 'package:tcp/firebase_notifications.dart';
-import 'package:tcp/firebase_options.dart';
+import 'package:tcp/feutaure/simi_products/presentation/manger/semi_finished_products_cubit.dart';
+
 import 'package:tcp/screens/spash_view.dart';
 import 'package:tcp/view_models/auth_cubit/auth_cubit.dart';
 
 void main() async {
+  di.init(); // Initialize dependency injection
+
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  await setupFirebaseNotifications();
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
+  // await setupFirebaseNotifications();
 
   final SharedPreferences sharedPreferences =
       await SharedPreferences.getInstance();
@@ -39,6 +41,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(
+          create: (context) => di.sl<SemiFinishedProductsCubit>(),
+        ),
         // BlocProvider(
         //   create: (context) => RawMaterialBatchesListCubit(
         //     RawMaterialBatchRepository(

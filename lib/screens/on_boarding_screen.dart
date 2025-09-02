@@ -81,7 +81,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
           /// عرض عنوان ووصف الصفحة الحالية
           Expanded(
-            flex: 2,
+            flex: 5,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -108,41 +108,43 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
           SizedBox(height: 25.h),
 
-          /// زر الانتقال بين الصفحات
-          Padding(
-            padding: EdgeInsets.only(left: 25.w, right: 23.w, bottom: 30.h),
-            child: PrimaryButton(
-              elevation: 0,
-              onTap: () {
-                setState(() {
-                  if (_currentIndex == onBoardinglist.length - 1) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RegisterScreen(),
-                      ),
-                    );
-                  } else {
-                    _pageController.nextPage(
-                      duration: const Duration(milliseconds: 500),
-                      curve: Curves.fastOutSlowIn,
-                    );
-                  }
-                });
-              },
-              bgColor: MyAppColors.kPrimary,
-              borderRadius: 20.r,
-              height: 40.h,
-              width: 280.w,
-              textColor: MyAppColors.kWhite,
-              child: Text(
-                _currentIndex == onBoardinglist.length - 1
-                    ? 'Get Started'
-                    : 'Next',
-                style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w500,
-                    color: MyAppColors.kWhite),
+          // /// زر الانتقال بين الصفحات
+          Center(
+            child: Padding(
+              padding: EdgeInsets.only(left: 25.w, right: 23.w, bottom: 30.h),
+              child: PrimaryButton(
+                elevation: 0,
+                onTap: () {
+                  setState(() {
+                    if (_currentIndex == onBoardinglist.length - 1) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RegisterScreen(),
+                        ),
+                      );
+                    } else {
+                      _pageController.nextPage(
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.fastOutSlowIn,
+                      );
+                    }
+                  });
+                },
+                bgColor: MyAppColors.kPrimary,
+                borderRadius: 20.r,
+                height: 40.h,
+                width: 280.w,
+                textColor: MyAppColors.kWhite,
+                child: Text(
+                  _currentIndex == onBoardinglist.length - 1
+                      ? 'Get Started'
+                      : 'Next',
+                  style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w500,
+                      color: MyAppColors.kWhite),
+                ),
               ),
             ),
           ),

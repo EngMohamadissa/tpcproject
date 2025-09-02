@@ -6,12 +6,14 @@ class BirthdayCard extends StatelessWidget {
       required this.tite,
       required this.iconData,
       required this.listColor,
-      this.ontap});
+      this.ontap,
+      required this.count});
   final String tite;
   final IconData iconData;
   final List<Color> listColor;
 
   final void Function()? ontap;
+  final String count;
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +51,17 @@ class BirthdayCard extends StatelessWidget {
                 color: Colors.white,
                 size: 40,
               ),
+              Text(
+                count,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  height: 1.3,
+                ),
+              ),
+              const SizedBox(height: 10),
             ],
           ),
         ),

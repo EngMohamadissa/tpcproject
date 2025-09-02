@@ -22,16 +22,16 @@ class _CreateDamagedMaterialScreenState
     extends State<CreateDamagedMaterialScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _quantityController = TextEditingController();
-  final TextEditingController _rawMaterialBatchIdController =
-      TextEditingController();
-  final TextEditingController _productBatchIdController =
-      TextEditingController();
+  // final TextEditingController _rawMaterialBatchIdController =
+  //     TextEditingController();
+  // final TextEditingController _productBatchIdController =
+  //     TextEditingController();
 
   @override
   void dispose() {
     _quantityController.dispose();
-    _rawMaterialBatchIdController.dispose();
-    _productBatchIdController.dispose();
+    // _rawMaterialBatchIdController.dispose();
+    // _productBatchIdController.dispose();
     super.dispose();
   }
 
