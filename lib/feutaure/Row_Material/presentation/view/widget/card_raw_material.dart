@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tcp/feutaure/Batch_Raw_Material/presentation/view/add_batch_raw_material_view.dart';
+import 'package:tcp/feutaure/Batch_Raw_Material/presentation/view/widget/get_all_batch_for_rowmaterial_id.dart';
 import 'package:tcp/feutaure/Row_Material/data/get_raw_material_model.dart';
 import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_update/raw_update_cubit.dart';
 import 'package:tcp/feutaure/Row_Material/presentation/view/manager/cubit_update/raw_update_state.dart';
@@ -170,12 +171,28 @@ class CardShapeRawmaterial extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            Text(
-              'Created at: ${rawMaterial.createdAt.toLocal().toString().split(' ')[0]}',
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey.shade600,
-              ),
+            Row(
+              children: [
+                Text(
+                  'Created at: ${rawMaterial.createdAt.toLocal().toString().split(' ')[0]}',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey.shade600,
+                  ),
+                ),
+                Spacer(),
+                IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => GetAllBatchForRowmaterialId(
+                                  rawMaterialId: rawMaterial.rawMaterialId,
+                                )),
+                      );
+                    },
+                    icon: Icon(Icons.details))
+              ],
             ),
           ],
         ),

@@ -20,61 +20,53 @@ class RawMaterialsListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<GetRawMaterialsCubit>(
-      create: (context) => GetRawMaterialsCubit(
-        rawMaterialRepository: RawMaterialRepository(
-          apiService: ApiService(),
-        ),
-      ),
-      child: BlocListener<UpdateRawMaterialCubit, UpdateRawmaterialState>(
-        listener: (context, state) {
-          if (state is UpdateRawMaterialSuccess ||
-              state is DeleatRawMaterialSuccess) {
-            context.read<GetRawMaterialsCubit>().fetchRawMaterials();
-          }
-          if (state is DeleatRawMaterialSuccess) {
-            showCustomSnackBar(context, state.message,
-                color: Palette.primarySuccess);
-          } else if (state is DeleatRawMaterialError) {
-            showCustomSnackBar(context, state.message,
-                color: Palette.primaryError);
-          }
-        },
-        child: Scaffold(
-          floatingActionButton:
-              buildFloatactionBouttonW(context, onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AddRawMaterialPage()),
-            );
-          }),
-          appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(kToolbarHeight),
-            child: AppareWidget(
-              actions: [
-                IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BlocProvider(
-                            create: (context) => RawMaterialSearchCubit(
-                              repository: RawMaterialRepository(
-                                  apiService: ApiService()),
-                            ),
-                            child: const RawMaterialSearchPage(),
+    return BlocListener<UpdateRawMaterialCubit, UpdateRawmaterialState>(
+      listener: (context, state) {
+        if (state is UpdateRawMaterialSuccess ||
+            state is DeleatRawMaterialSuccess) {
+          context.read<GetRawMaterialsCubit>().fetchRawMaterials();
+        }
+        if (state is DeleatRawMaterialSuccess) {
+          showCustomSnackBar(context, state.message,
+              color: Palette.primarySuccess);
+        } else if (state is DeleatRawMaterialError) {
+          showCustomSnackBar(context, state.message,
+              color: Palette.primaryError);
+        }
+      },
+      child: Scaffold(
+        floatingActionButton: buildFloatactionBouttonW(context, onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddRawMaterialPage()),
+          );
+        }),
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(kToolbarHeight),
+          child: AppareWidget(
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BlocProvider(
+                          create: (context) => RawMaterialSearchCubit(
+                            repository:
+                                RawMaterialRepository(apiService: ApiService()),
                           ),
+                          child: const RawMaterialSearchPage(),
                         ),
-                      );
-                    },
-                    icon: Icon(Icons.search))
-              ],
-              automaticallyImplyLeading: true,
-              title: 'قائمة المواد الخام',
-            ),
+                      ),
+                    );
+                  },
+                  icon: Icon(Icons.search))
+            ],
+            automaticallyImplyLeading: true,
+            title: 'قائمة المواد الخام',
           ),
-          body: const RawMaterialsListBody(),
         ),
+        body: const RawMaterialsListBody(),
       ),
     );
   }

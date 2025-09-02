@@ -77,8 +77,8 @@ class CustomTextFieldState extends State<CustomTextField> {
         decoration: InputDecoration(
           floatingLabelBehavior: widget.floatingLabelBehavior,
           errorStyle: const TextStyle(
-            color: Palette.primaryDark,
-            fontSize: 16,
+            color: Colors.red,
+            fontSize: 12,
             fontWeight: FontWeight.bold,
           ),
           isDense: widget.isDense,

@@ -1,189 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:tcp/core/util/apiservice.dart';
 import 'package:tcp/core/widget/appar_widget,.dart';
-import 'package:dio/dio.dart';
-import 'package:tcp/core/util/error/error_handling.dart';
-
-class RawMaterial {
-  final int rawMaterialId;
-  final String name;
-  final String description;
-  final double price;
-  final String status;
-  final double minimumStockAlert;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-
-  RawMaterial({
-    required this.rawMaterialId,
-    required this.name,
-    required this.description,
-    required this.price,
-    required this.status,
-    required this.minimumStockAlert,
-    required this.createdAt,
-    required this.updatedAt,
-  });
-
-  factory RawMaterial.fromJson(Map<String, dynamic> json) {
-    return RawMaterial(
-      rawMaterialId: json['raw_material_id'] as int,
-      name: json['name'] as String,
-      description: json['description'] as String,
-      price: double.parse(json['price'].toString()),
-      status: json['status'] as String,
-      minimumStockAlert: double.parse(json['minimum_stock_alert'].toString()),
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
-    );
-  }
-}
-
-// نموذج لشبه المنتج، مشابه لنموذج المنتج ولكن قد يكون له استخدامات مختلفة
-class SemiProduct {
-  final int productId; // يُستخدم product_id كمعرف لشبه المنتج أيضًا
-  final String name;
-  final String description;
-  final double price;
-  final String category;
-  final double weightPerUnit;
-  final double minimumStockAlert;
-  // final String? imagePath;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-
-  SemiProduct({
-    required this.productId,
-    required this.name,
-    required this.description,
-    required this.price,
-    required this.category,
-    required this.weightPerUnit,
-    required this.minimumStockAlert,
-    // this.imagePath,
-    required this.createdAt,
-    required this.updatedAt,
-  });
-
-  factory SemiProduct.fromJson(Map<String, dynamic> json) {
-    return SemiProduct(
-      productId: json['product_id'] as int,
-      name: json['name'] as String,
-      description: json['description'] as String,
-      price: double.parse(json['price'].toString()),
-      category: json['category'] as String,
-      weightPerUnit: double.parse(json['weight_per_unit'].toString()),
-      minimumStockAlert: double.parse(json['minimum_stock_alert'].toString()),
-      // imagePath: json['image_path'] as String?,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
-    );
-  }
-}
-
-// النموذج الرئيسي الذي يمثل كل عنصر في استجابة product_rawmaterial API
-class ProductMaterialRelationship {
-  final int productMaterialId;
-  final int productId;
-  final int? semiProductId; // تم جعلها قابلة للقيمة الفارغة
-  final int? rawMaterialId; // تم جعلها قابلة للقيمة الفارغة
-  final String componentType;
-  final double quantityRequiredPerUnit;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final Product1 product; // المنتج الرئيسي
-  final RawMaterial?
-      rawMaterial; // المادة الخام المستخدمة (قابلة للقيمة الفارغة)
-  final SemiProduct? semiProduct; // شبه المنتج المستخدم (قابل للقيمة الفارغة)
-
-  ProductMaterialRelationship({
-    required this.productMaterialId,
-    required this.productId,
-    this.semiProductId,
-    this.rawMaterialId,
-    required this.componentType,
-    required this.quantityRequiredPerUnit,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.product,
-    this.rawMaterial,
-    this.semiProduct,
-  });
-
-  factory ProductMaterialRelationship.fromJson(Map<String, dynamic> json) {
-    return ProductMaterialRelationship(
-      productMaterialId: json['product_material_id'] as int,
-      productId: json['product_id'] as int,
-      semiProductId: json['semi_product_id'] as int?,
-      rawMaterialId: json['raw_material_id'] as int?,
-      componentType: json['component_type'] as String,
-      quantityRequiredPerUnit:
-          double.parse(json['quantity_required_per_unit'].toString()),
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
-      product: Product1.fromJson(json['product'] as Map<String, dynamic>),
-      // التحقق مما إذا كانت القيمة غير فارغة قبل التحويل
-      rawMaterial: (json['raw_material'] != null)
-          ? RawMaterial.fromJson(json['raw_material'] as Map<String, dynamic>)
-          : null,
-      semiProduct: (json['semi_product'] != null)
-          ? SemiProduct.fromJson(json['semi_product'] as Map<String, dynamic>)
-          : null,
-    );
-  }
-}
-
-class Product1 {
-  final int productId;
-  final String name;
-  final String description; // أعدت الوصف لأنه موجود في الـ JSON
-  final double price;
-  final String category;
-  final double weightPerUnit;
-  final double minimumStockAlert;
-  final String? imagePath;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  // final List<ProductMaterial> productMaterials; // 🚨 قم بإزالة هذا السطر
-
-  Product1({
-    required this.productId,
-    required this.name,
-    required this.description, // أعدت الوصف
-    required this.price,
-    required this.category,
-    required this.weightPerUnit,
-    required this.minimumStockAlert,
-    this.imagePath,
-    required this.createdAt,
-    required this.updatedAt,
-    // required this.productMaterials, // 🚨 قم بإزالة هذا السطر
-  });
-
-  factory Product1.fromJson(Map<String, dynamic> json) {
-    // 🚨 قم بإزالة هذا الجزء بالكامل
-    // var productMaterialsList = json['product_materials'] as List;
-    // List<ProductMaterial> materials = productMaterialsList
-    //     .map((materialJson) => ProductMaterial.fromJson(materialJson))
-    //     .toList();
-
-    return Product1(
-      productId: json['product_id'] as int,
-      name: json['name'] as String,
-      description: json['description'] as String, // تأكد من وجوده في الـ JSON
-      price: double.parse(json['price'].toString()),
-      category: json['category'] as String,
-      weightPerUnit: double.parse(json['weight_per_unit'].toString()),
-      minimumStockAlert: double.parse(json['minimum_stock_alert'].toString()),
-      imagePath: json['image_path'] as String?,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
-      // productMaterials: materials, // 🚨 قم بإزالة هذا السطر
-    );
-  }
-}
+import 'package:tcp/feutaure/productmaterial/data/product_material_model.dart';
+import 'package:tcp/feutaure/productmaterial/repo/repo_product_material.dart';
 
 abstract class ProductMaterialsState {}
 
@@ -202,59 +22,15 @@ class ProductMaterialsError extends ProductMaterialsState {
 }
 
 // يمكن إضافة حالة لنجاح عملية (مثل الحذف أو التعديل) إذا لزم الأمر
-class ProductMaterialsActionSuccess extends ProductMaterialsState {
-  final String message;
-  // قد ترغب في الاحتفاظ بقائمة العلاقات بعد النجاح
-  final List<ProductMaterialRelationship> relationships;
-  ProductMaterialsActionSuccess(
-      {required this.message, required this.relationships});
-}
+// class ProductMaterialsActionSuccess extends ProductMaterialsState {
+//   final String message;
+//   // قد ترغب في الاحتفاظ بقائمة العلاقات بعد النجاح
+//   final List<ProductMaterialRelationship> relationships;
+//   ProductMaterialsActionSuccess(
+//       {required this.message, required this.relationships});
+// }
 
 // lib/feutaure/product_materials/repo/product_materials_repo.dart
-
-class ProductMaterialsRepo {
-  final ApiService _apiService;
-
-  ProductMaterialsRepo(this._apiService);
-
-  Future<List<ProductMaterialRelationship>> fetchProductMaterials() async {
-    try {
-      final response = await _apiService
-          .get('product-materials'); // نقطة النهاية (endpoint) الجديدة
-      if (response.statusCode == 200) {
-        final List<dynamic> jsonList = response.data['data'];
-        return jsonList
-            .map((json) => ProductMaterialRelationship.fromJson(json))
-            .toList();
-      } else {
-        throw Exception(
-            'Failed to load product materials: ${response.statusCode}');
-      }
-    } on DioException catch (e) {
-      throw ErrorHandler.handleDioError(e);
-    } catch (e) {
-      throw Exception('An unexpected error occurred: $e');
-    }
-  }
-
-  Future<void> deleteProductMaterial(int productMaterialId) async {
-    try {
-      final response =
-          await _apiService.delete('product-rawmaterial/$productMaterialId');
-      if (response.statusCode == 200) {
-        print(
-            'Product material relationship deleted successfully: $productMaterialId');
-      } else {
-        throw Exception(
-            'Failed to delete product material relationship: ${response.statusCode}');
-      }
-    } on DioException catch (e) {
-      throw ErrorHandler.handleDioError(e);
-    } catch (e) {
-      throw Exception('An unexpected error occurred: $e');
-    }
-  }
-}
 
 class ProductMaterialsCubit extends Cubit<ProductMaterialsState> {
   final ProductMaterialsRepo _repository;
@@ -301,9 +77,8 @@ class _ProductMaterialsListViewState extends State<ProductMaterialsListView> {
   void initState() {
     super.initState();
     // عند تهيئة الشاشة، اطلب من الـ Cubit جلب البيانات
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<ProductMaterialsCubit>().fetchProductMaterials();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    context.read<ProductMaterialsCubit>().fetchProductMaterials(); // });
   }
 
   // دالة مساعدة لإنشاء صف معلومات بليبل وقيمة مع أيقونة
@@ -375,14 +150,6 @@ class _ProductMaterialsListViewState extends State<ProductMaterialsListView> {
                   ),
                 ),
               );
-            } else if (state is ProductMaterialsActionSuccess) {
-              ScaffoldMessenger.of(context).hideCurrentSnackBar();
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.message),
-                  backgroundColor: Colors.green,
-                ),
-              );
             }
           },
           builder: (context, state) {
@@ -452,7 +219,7 @@ class _ProductMaterialsListViewState extends State<ProductMaterialsListView> {
                         children: [
                           // عنوان المنتج الرئيسي
                           Text(
-                            'Product: ${relationship.product.name}',
+                            'Product: ${relationship.product!.name}',
                             style: TextStyle(
                               fontSize: 19,
                               fontWeight: FontWeight.bold,
@@ -461,11 +228,11 @@ class _ProductMaterialsListViewState extends State<ProductMaterialsListView> {
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                           ),
-                          _buildInfoRow(
-                              'Product ID', '${relationship.product.productId}',
+                          _buildInfoRow('Product ID',
+                              '${relationship.product!.productId}',
                               icon: Icons.qr_code, iconColor: Colors.grey[600]),
-                          _buildInfoRow(
-                              'Product Category', relationship.product.category,
+                          _buildInfoRow('Product Category',
+                              relationship.product!.category,
                               icon: Icons.category,
                               iconColor: Colors.deepPurple),
 
@@ -637,7 +404,7 @@ class _ProductMaterialsListViewState extends State<ProductMaterialsListView> {
         return AlertDialog(
           title: const Text('Confirm Deletion'),
           content: Text(
-              'Are you sure you want to delete this component relationship for "${relationship.product.name}"?'),
+              'Are you sure you want to delete this component relationship for "${relationship.product!.name}"?'),
           actions: <Widget>[
             TextButton(
               onPressed: () {

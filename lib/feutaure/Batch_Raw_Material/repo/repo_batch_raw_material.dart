@@ -2,6 +2,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:tcp/core/util/apiservice.dart';
+import 'package:tcp/core/util/error/error_handling.dart';
 import 'package:tcp/feutaure/Batch_Raw_Material/data/batch_raw_material_model.dart';
 
 class RawMaterialBatchRepository {
@@ -44,7 +45,6 @@ class RawMaterialBatchRepository {
 
       // التحقق من رمز الحالة الناجح
       if (response.statusCode == 200) {
-        print('oqwpeoqpweoqpweoqp[11111111111111111111]${response.data}');
         // التحقق من أن البيانات موجودة وأنها قائمة
         if (response.data != null && response.data['data'] is List) {
           // تحويل قائمة الخرائط JSON إلى قائمة من RawMaterialBatchModel
@@ -66,10 +66,8 @@ class RawMaterialBatchRepository {
         );
       }
     } on DioException catch (e) {
-      // إعادة رمي DioException الأصلي للسماح للـ Cubit بالتقاطه ومعالجته بواسطة ErrorHandler
       rethrow;
     } catch (e) {
-      // التقاط أي استثناءات أخرى غير متوقعة (ليست DioException)
       throw Exception(
           'حدث خطأ غير متوقع في جلب دفعات المواد الخام: ${e.toString()}');
     }
@@ -120,5 +118,67 @@ class RawMaterialBatchRepository {
     } catch (e) {
       throw Exception(e.toString());
     }
+  }
+
+  Future<List<RawMaterialBatch>> getAllBatch(
+      {required int rawMaterialId}) async {
+    try {
+      final response = await apiService.get(
+        'by-raw-material/$rawMaterialId',
+      );
+      final data = response.data['data'] as List;
+      final batches =
+          data.map((json) => RawMaterialBatch.fromJson(json)).toList();
+      return batches;
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+}
+
+class RawMaterialBatch {
+  final int rawMaterialBatchId;
+  final int userId;
+  final int rawMaterialId;
+  final double quantityIn;
+  final double quantityOut;
+  final double quantityRemaining;
+  final double realCost;
+  final String paymentMethod;
+  final String supplier;
+  final String notes;
+  final String createdAt;
+  final String updatedAt;
+
+  RawMaterialBatch({
+    required this.rawMaterialBatchId,
+    required this.userId,
+    required this.rawMaterialId,
+    required this.quantityIn,
+    required this.quantityOut,
+    required this.quantityRemaining,
+    required this.realCost,
+    required this.paymentMethod,
+    required this.supplier,
+    required this.notes,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  factory RawMaterialBatch.fromJson(Map<String, dynamic> json) {
+    return RawMaterialBatch(
+      rawMaterialBatchId: json['raw_material_batch_id'],
+      userId: json['user_id'],
+      rawMaterialId: json['raw_material_id'],
+      quantityIn: double.parse(json['quantity_in']),
+      quantityOut: double.parse(json['quantity_out']),
+      quantityRemaining: double.parse(json['quantity_remaining']),
+      realCost: double.parse(json['real_cost']),
+      paymentMethod: json['payment_method'],
+      supplier: json['supplier'],
+      notes: json['notes'],
+      createdAt: json['created_at'],
+      updatedAt: json['updated_at'],
+    );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:tcp/core/util/apiservice.dart';
+import 'package:tcp/core/util/const.dart';
 import 'package:tcp/core/util/error/error_handling.dart';
 import 'package:tcp/feutaure/Product/data/get_all_product_model.dart';
 
@@ -36,6 +37,14 @@ class ProductListRepo {
       }
     } catch (e) {
       throw Exception(e.toString());
+    }
+  }
+
+  Future<void> addNewProduct(Map<String, dynamic> body) async {
+    try {
+      await apiService.post('products', body);
+    } catch (e) {
+      rethrow;
     }
   }
 }

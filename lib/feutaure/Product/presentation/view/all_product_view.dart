@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:tcp/core/util/apiservice.dart';
 import 'package:tcp/core/util/const.dart';
 import 'package:tcp/core/util/func/alert_dilog.dart';
 import 'package:tcp/core/util/func/show.dart';
@@ -8,10 +9,13 @@ import 'package:tcp/core/util/styles.dart';
 import 'package:tcp/core/widget/appar_widget,.dart'; // Assuming this exists
 import 'package:tcp/core/widget/cusrom_button_card.dart';
 import 'package:tcp/feutaure/Product/data/get_all_product_model.dart';
+import 'package:tcp/feutaure/Product/presentation/view/add_new_producr.dart';
 import 'package:tcp/feutaure/Product/presentation/view/manager/cubit_update/update_product_cubit.dart';
 import 'package:tcp/feutaure/Product/presentation/view/manager/cubit_update/update_product_state.dart';
 import 'package:tcp/feutaure/Product/presentation/view/manager/get_cubit/get_all_product_cubit.dart';
 import 'package:tcp/feutaure/Product/presentation/view/manager/get_cubit/get_all_product_state.dart';
+import 'package:tcp/feutaure/productmaterial/presentation/view/widget/product_raw_material_by_id.dart';
+import 'package:tcp/feutaure/productmaterial/repo/repo_product_material.dart';
 
 class ProductListView extends StatefulWidget {
   const ProductListView({super.key});
@@ -185,6 +189,28 @@ class _ProductListViewState extends State<ProductListView> {
                                   ),
                                 ),
                                 const SizedBox(width: 12),
+                                IconButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => BlocProvider(
+                                                create: (context) =>
+                                                    ProductMaterialsByIDCubit(
+                                                        ProductMaterialsRepo(
+                                                            ApiService())),
+                                                child: ProductRawMaterialById(
+                                                  id: product.productId,
+                                                ),
+                                              )),
+                                    );
+                                  },
+                                  icon: Icon(
+                                    Icons.fact_check,
+                                  ),
+                                  color: Colors.blue,
+                                  tooltip: 'product materiall',
+                                )
                               ],
                             ),
                             const SizedBox(height: 15),
@@ -368,10 +394,10 @@ class _ProductListViewState extends State<ProductListView> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(builder: (context) => AddProductView()),
-            // );
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AddNewProduct()),
+            );
           },
           backgroundColor: Colors.indigo,
           foregroundColor: Colors.white,
@@ -424,7 +450,7 @@ class _ProductListViewState extends State<ProductListView> {
   }
 }
 
-// Extension to capitalize first letter of each word
+// // Extension to capitalize first letter of each word
 // extension StringExtension on String {
 //   String capitalizeFirstofEach() {
 //     if (isEmpty) return this;

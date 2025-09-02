@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tcp/core/widget/appar_widget,.dart';
 import 'package:tcp/feutaure/Product/presentation/view/all_product_view.dart';
 import 'package:tcp/feutaure/ProductSaleReports/presentation/view/widget/build_conroller_widget.dart';
-import 'package:tcp/testrawmaterialproduct.dart';
+import 'package:tcp/feutaure/productmaterial/presentation/view/all_product_material_view.dart';
 
 class NavigatorProduct extends StatelessWidget {
   const NavigatorProduct({super.key});

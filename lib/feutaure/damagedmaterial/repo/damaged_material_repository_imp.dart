@@ -85,10 +85,7 @@ class DamagedMaterialRepositoryImp {
   Future<DamagedMaterialProfitLossReportModel> updateDamagedMaterial(
     int damagedMaterialId, {
     required double quantity,
-    String? notes, // Allow notes to be updated if needed
-    // You could also add options to update product_batch_id or raw_material_batch_id
-    // but the API usually handles this by type directly, or they're immutable after creation.
-    // Based on your specific request, only quantity is mandatory.
+    String? notes,
   }) async {
     final Map<String, dynamic> data = {
       'quantity': quantity,

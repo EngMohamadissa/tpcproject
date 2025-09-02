@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tcp/core/util/const.dart'; // تأكد من أن هذا الملف يزود productionSettingsRepo
 import 'package:tcp/core/util/func/show.dart';
 import 'package:tcp/core/widget/appar_widget,.dart';
-import 'package:tcp/core/widget/error_widget_view.dart';
 import 'package:tcp/feutaure/ProductionSettings/data/model/entities/production_setting.dart';
 import 'package:tcp/feutaure/ProductionSettings/presentation/manger/cubit/cubit/cubit/add_production_setting_cubit.dart';
 import 'package:tcp/feutaure/ProductionSettings/presentation/manger/cubit/cubit/cubit/add_production_setting_state.dart';
