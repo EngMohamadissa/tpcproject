@@ -1,3 +1,4 @@
+import 'package:tcp/core/util/assets_image.dart';
 import 'package:tcp/core/util/const.dart';
 import 'package:tcp/core/util/styles.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,12 @@ class AppareWidget extends StatelessWidget {
         SizedBox(
           width: 10,
         ),
-        const Icon(Icons.ad_units), // الشعار دايمًا موجود
+        Image.asset(
+          height: 40,
+          width: 40,
+          Assets.assetsImagesLogo2RemovebgPreview,
+          color: Colors.white,
+        ) // الشعار دايمًا موجود
         // إضافة الأيقونات الإضافية إذا موجودة
       ],
       automaticallyImplyLeading: automaticallyImplyLeading,

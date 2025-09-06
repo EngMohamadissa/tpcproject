@@ -10,7 +10,7 @@ class MonthlyProfitModel {
   factory MonthlyProfitModel.fromJson(Map<String, dynamic> json) {
     return MonthlyProfitModel(
       month: json['month'] as String,
-      totalProfit: (json['total_profit'] as num).toDouble(),
+      totalProfit: double.tryParse(json['total_profit'].toString()) ?? 0.0,
     );
   }
 }

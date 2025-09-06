@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tcp/constants/style.dart';
+import 'package:tcp/core/util/app_router.dart';
 import 'package:tcp/core/util/assets_image.dart';
-
-import 'package:tcp/core/util/styles.dart';
-import 'package:tcp/screens/on_boarding_screen.dart';
 
 class SplashSreen extends StatefulWidget {
   const SplashSreen({super.key});
@@ -19,10 +19,8 @@ class _SplashSreenState extends State<SplashSreen> {
     super.initState();
 
     Future.delayed(const Duration(seconds: 4), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => OnBoardingScreen()),
-      );
+      if (!mounted) return;
+      context.go(AppRoutes.onBoarding);
     });
   }
 
@@ -37,7 +35,7 @@ class _SplashSreenState extends State<SplashSreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              Assets.assetsImagesLogo2RemovebgPreview,
+              Assets.assetsImagesLogo2,
               width: 200.w,
               height: 200.w,
             )
@@ -45,9 +43,7 @@ class _SplashSreenState extends State<SplashSreen> {
                 .fadeIn(duration: 1200.ms)
                 .scale(begin: const Offset(0.5, 0.5), duration: 1200.ms),
             30.verticalSpace,
-            Text("  Welcome to T P C",
-                    style: Styles.textStyle24.copyWith(
-                        color: const Color.fromARGB(255, 62, 103, 174)))
+            Text("  Welcome to T P C", style: AppTextStyles.calibri22Splach)
                 .animate(delay: 1000.ms)
                 .fadeIn(duration: 1000.ms)
                 .slide(begin: const Offset(0, 0.3)),

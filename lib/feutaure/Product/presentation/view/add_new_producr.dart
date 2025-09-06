@@ -53,7 +53,6 @@ class _AddNewProductBodyState extends State<AddNewProductBody> {
   final List<String> _materialTypes = [
     'direct_raw',
     'semi_raw',
-    'semi_to_finished',
   ];
 
   // 🚀 القائمة الديناميكية للمواد المكونة

@@ -182,16 +182,27 @@ class CardShapeRawmaterial extends StatelessWidget {
                 ),
                 Spacer(),
                 IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => GetAllBatchForRowmaterialId(
-                                  rawMaterialId: rawMaterial.rawMaterialId,
-                                )),
-                      );
-                    },
-                    icon: Icon(Icons.details))
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => GetAllBatchForRowmaterialId(
+                                rawMaterialId: rawMaterial.rawMaterialId,
+                                namerawmaterial: rawMaterial.name,
+                                rawMaterialPrice: rawMaterial.price,
+                                rawMaterialStatus: rawMaterial.status,
+                                rawMaterialDescription: rawMaterial.description,
+                                minimumStockAlert:
+                                    rawMaterial.minimumStockAlert,
+                              )),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.batch_prediction,
+                    color: Colors.blue,
+                  ),
+                  tooltip: 'batchs',
+                )
               ],
             ),
           ],

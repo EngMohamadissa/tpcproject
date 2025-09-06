@@ -31,10 +31,10 @@ class PasswordTextField extends StatefulWidget {
   final String? initValue;
 
   @override
-  PasswordTextFieldState createState() => PasswordTextFieldState();
+  _PasswordTextFieldState createState() => _PasswordTextFieldState();
 }
 
-class PasswordTextFieldState extends State<PasswordTextField> {
+class _PasswordTextFieldState extends State<PasswordTextField> {
   bool _obscureText = true;
 
   @override
@@ -65,19 +65,19 @@ class PasswordTextFieldState extends State<PasswordTextField> {
           fillColor: MyAppColors.kBackground2,
           prefixIcon: widget.prefixIcon,
           suffixIcon: IconButton(
-            icon: Icon(
-              _obscureText
-                  ? Icons.visibility_outlined
-                  : Icons.visibility_off_outlined,
-              color: MyAppColors.kPrimary,
-              size: 17.h,
-            ),
-            onPressed: () {
-              setState(() {
-                _obscureText = !_obscureText;
-              });
-            },
-          ),
+                icon: Icon( 
+                  _obscureText
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined,
+                  color: MyAppColors.kPrimary,
+                  size: 17.h,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _obscureText = !_obscureText;
+                  });
+                },
+              ),
         ),
         keyboardType: widget.keyboard,
         validator: widget.validate,

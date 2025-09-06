@@ -66,7 +66,7 @@ class MonthlyProfitScreen extends StatelessWidget {
 
   Widget _buildLoadedState(BuildContext context, MonthlyProfitLoaded state) {
     final monthlyProfit = state.monthlyProfit;
-    final isProfit = monthlyProfit.totalProfit >= 0;
+    final isProfit = monthlyProfit.totalProfit >= 0.0;
     final profitColor = isProfit ? Palette.primary : Colors.red[700]!;
     final icon = isProfit ? Icons.trending_up : Icons.trending_down;
 

@@ -21,6 +21,7 @@ class ProductSummaryRepositoryImp {
     } on DioException catch (e) {
       throw ErrorHandler.handleDioError(e);
     } catch (e) {
+      print(e.toString());
       throw Exception('فشل في جلب الربح الشهري: $e');
     }
   }

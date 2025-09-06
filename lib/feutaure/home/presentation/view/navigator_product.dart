@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tcp/core/widget/appar_widget,.dart';
 import 'package:tcp/feutaure/Product/presentation/view/all_product_view.dart';
 import 'package:tcp/feutaure/ProductSaleReports/presentation/view/widget/build_conroller_widget.dart';
+import 'package:tcp/feutaure/productBatch/presentation/view/all_product_batch_view.dart';
 import 'package:tcp/feutaure/productmaterial/presentation/view/all_product_material_view.dart';
 
 class NavigatorProduct extends StatelessWidget {
@@ -58,12 +59,10 @@ class NavigatorProduct extends StatelessWidget {
                 title: 'Product Batch',
                 icon: Icons.calendar_month,
                 color: Colors.green[700]!, onTap: () {
-              //    {
-              //   Navigator.push(
-              //     context,
-              //     MaterialPageRoute(builder: (context) => ProductListView()),
-              //   );
-              // },
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProductBatchListView()),
+              );
             }),
           ],
         ),

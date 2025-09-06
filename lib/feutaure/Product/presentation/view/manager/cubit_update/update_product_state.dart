@@ -1,18 +1,18 @@
 class UpdateProductState {}
 
-// final class UpdateProductInitial extends UpdateProductState {}
+final class UpdateProductInitial extends UpdateProductState {}
 
-// final class UpdateProductLoading extends UpdateProductState {}
+final class UpdateProductLoading extends UpdateProductState {}
 
-// final class UpdateProductSuccess extends UpdateProductState {
-//   final String message;
-//   UpdateProductSuccess(this.message);
-// }
+final class UpdateProductSuccess extends UpdateProductState {
+  final String message;
+  UpdateProductSuccess(this.message);
+}
 
-// final class UpdateProductError extends UpdateProductState {
-//   final String message;
-//   UpdateProductError(this.message);
-// }
+final class UpdateProductError extends UpdateProductState {
+  final String message;
+  UpdateProductError(this.message);
+}
 
 final class DeleatProductInitial extends UpdateProductState {}
 

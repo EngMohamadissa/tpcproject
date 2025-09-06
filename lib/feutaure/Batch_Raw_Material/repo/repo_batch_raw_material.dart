@@ -147,8 +147,8 @@ class RawMaterialBatch {
   final String paymentMethod;
   final String supplier;
   final String notes;
-  final String createdAt;
-  final String updatedAt;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
   RawMaterialBatch({
     required this.rawMaterialBatchId,
@@ -177,8 +177,8 @@ class RawMaterialBatch {
       paymentMethod: json['payment_method'],
       supplier: json['supplier'],
       notes: json['notes'],
-      createdAt: json['created_at'],
-      updatedAt: json['updated_at'],
+      createdAt: DateTime.parse(json['created_at'] as String),
+      updatedAt: DateTime.parse(json['updated_at'] as String),
     );
   }
 }

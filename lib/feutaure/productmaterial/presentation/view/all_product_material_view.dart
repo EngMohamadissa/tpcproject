@@ -383,15 +383,6 @@ class _ProductMaterialsListViewState extends State<ProductMaterialsListView> {
           },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: Colors.indigo,
-        foregroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: const Icon(Icons.add),
-      ),
     );
   }
 

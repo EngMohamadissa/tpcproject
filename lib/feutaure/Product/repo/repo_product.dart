@@ -47,4 +47,12 @@ class ProductListRepo {
       rethrow;
     }
   }
+
+  Future<void> updateproductprice() async {
+    try {
+      await apiService.postnew('products/update-products-prices');
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

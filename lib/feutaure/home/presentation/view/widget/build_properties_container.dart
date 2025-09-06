@@ -10,6 +10,9 @@ import 'package:tcp/feutaure/home/presentation/view/widget/build_property_item.d
 import 'package:tcp/feutaure/notification/presentation/view/notifications_page.dart';
 import 'package:tcp/feutaure/profit-loss-report/presentation/view/profit_loss_view.dart';
 import 'package:tcp/feutaure/simi_products/presentation/view/semi_finished_products_page.dart';
+import 'package:tcp/screens/expences/expense_categories_screen.dart';
+import 'package:tcp/screens/expences/expenses_screen.dart';
+import 'package:tcp/screens/product_sales/product_sales_screen.dart';
 
 Widget buildPropertiesContainer(BuildContext context) {
   return Column(
@@ -84,6 +87,31 @@ Widget buildPropertiesContainer(BuildContext context) {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => NotificationsPage()),
+            );
+          }),
+          buildPropertyItem(Icons.attach_money_rounded, 'Expenses', 'TPC', () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ExpenseScreen(),
+              ),
+            );
+          }),
+          buildPropertyItem(Icons.money_rounded, 'Expenses Category', 'TPC',
+              () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ExpenseCategoriesScreen(),
+              ),
+            );
+          }),
+          buildPropertyItem(Icons.sailing, 'Product Sales', 'TPC', () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductSalesScreen(),
+              ),
             );
           }),
         ],

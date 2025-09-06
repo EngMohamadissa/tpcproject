@@ -4,7 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tcp/constants/my_app_colors.dart';
-import 'package:tcp/screens/sign_in_screen.dart';
+import 'package:tcp/constants/validate.dart';
+import 'package:tcp/screens/auth/sign_in_screen.dart';
 import 'package:tcp/view_models/auth_cubit/auth_cubit.dart';
 import 'package:tcp/view_models/auth_cubit/auth_state.dart';
 import 'package:tcp/widgets/auth_widget/custom_rich_text.dart';
@@ -136,22 +137,7 @@ class RegisterScreen extends StatelessWidget {
                             c.email.text = value!;
                           },
                           validate: (value) {
-                            if (value == null || value.trim().isEmpty) {
-                              return "email required";
-                            }
-                            int index = 0;
-                            for (int i = 0; i < value.length; i++) {
-                              if (value[i] == '@') {
-                                index = i;
-                                break;
-                              }
-                            }
-                            String email = value.substring(0, index);
-                            if (int.tryParse(email) != null ||
-                                double.tryParse(email) != null ||
-                                email.length < 3) {
-                              return "invalid email";
-                            }
+                            Validate.emailValidate(value);
                             return null;
                           },
                           suffixIcon: Icon(Icons.email_outlined),
@@ -168,17 +154,12 @@ class RegisterScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 8.h),
                         PasswordTextField(
-                          // keyboard: TextInputType.visiblePassword,
+                          keyboard: TextInputType.visiblePassword,
                           save: (value) {
                             c.password.text = value!;
                           },
                           validate: (value) {
-                            if (value == null || value.trim().isEmpty) {
-                              return "password missing";
-                            }
-                            if (value.trim().length < 8) {
-                              return "password too short";
-                            }
+                            Validate.passwordValidate(value);
                             return null;
                           },
                           label: "password",
@@ -202,6 +183,8 @@ class RegisterScreen extends StatelessWidget {
                           validate: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter a phone number';
+                            } else if (!isValidSyrianPhoneNumber(value)) {
+                              return 'Invalid Syrian phone number';
                             }
                             return null;
                           },

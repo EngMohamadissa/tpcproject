@@ -72,6 +72,16 @@ class ApiService {
     }
   }
 
+  Future<Response> postnew(
+    String path,
+  ) async {
+    try {
+      return await _dio.post(path);
+    } on DioException catch (e) {
+      throw ErrorHandler.handleDioError(e);
+    }
+  }
+
   Future<Response> delete(
     String path, {
     Map<String, dynamic>? queryParameters,

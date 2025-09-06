@@ -194,29 +194,28 @@ class _ProductMaterialsListViewState extends State<ProductRawMaterialById> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // عنوان المنتج الرئيسي
-                          Text(
-                            'Product: ${relationship.product?.name ?? 'N/A'}',
-                            style: TextStyle(
-                              fontSize: 19,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.indigo[800],
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                          ),
+                          // Text(
+                          //   'Product: ${relationship.product?.name ?? 'N/A'}',
+                          //   style: TextStyle(
+                          //     fontSize: 19,
+                          //     fontWeight: FontWeight.bold,
+                          //     color: Colors.indigo[800],
+                          //   ),
+                          //   overflow: TextOverflow.ellipsis,
+                          //   maxLines: 2,
+                          // ),
 
-                          _buildInfoRow(
-                              'Product Category',
-                              // 🚨 تم تصحيح هذا السطر
-                              relationship.product?.category ?? 'N/A',
-                              icon: Icons.category,
-                              iconColor: Colors.deepPurple),
+                          // _buildInfoRow(
+                          //     'Product Category',
+                          //     // 🚨 تم تصحيح هذا السطر
+                          //     relationship.product?.category ?? 'N/A',
+                          //     icon: Icons.category,
+                          //     iconColor: Colors.deepPurple),
 
-                          const SizedBox(height: 15),
-                          const Divider(
-                              height: 1, thickness: 0.8, color: Colors.indigo),
-                          const SizedBox(height: 15),
+                          // const SizedBox(height: 15),
+                          // const Divider(
+                          //     height: 1, thickness: 0.8, color: Colors.indigo),
+                          // const SizedBox(height: 15),
 
                           // تفاصيل المكون (مادة خام أو شبه منتج)
                           Text(
@@ -359,15 +358,6 @@ class _ProductMaterialsListViewState extends State<ProductRawMaterialById> {
             }
           },
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: Colors.indigo,
-        foregroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: const Icon(Icons.add),
       ),
     );
   }
